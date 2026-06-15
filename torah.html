@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>פנינים ומרגליות לנוסע | מה יש בזה?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap');
+
+    :root {
+      --gold: #b8860b;
+      --gold-light: #d4a017;
+      --gold-shine: #f0c040;
+      --parchment: #f5edd6;
+      --parchment-dark: #e8d9b5;
+      --brown-dark: #2c1a0e;
+      --brown-mid: #5a3825;
+      --brown-light: #8b5e3c;
+      --red-deep: #8b0000;
+      --cream: #faf6ec;
+      --border-ornate: 3px double var(--gold);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Frank Ruhl Libre', serif;
+      background-color: var(--brown-dark);
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 40px,
+          rgba(184,134,11,0.03) 40px,
+          rgba(184,134,11,0.03) 41px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 40px,
+          rgba(184,134,11,0.03) 40px,
+          rgba(184,134,11,0.03) 41px
+        );
+      min-height: 100vh;
+      color: var(--brown-dark);
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: linear-gradient(180deg, #1a0a04 0%, var(--brown-dark) 100%);
+      border-bottom: 4px double var(--gold);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-ornament {
+      text-align: center;
+      color: var(--gold);
+      font-size: 1.1rem;
+      letter-spacing: 0.5rem;
+      padding: 6px 0;
+      background: rgba(184,134,11,0.08);
+      border-bottom: 1px solid rgba(184,134,11,0.3);
+    }
+    .header-main {
+      padding: 20px 40px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+    .star-of-david {
+      font-size: 3rem;
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(212,160,23,0.6);
+      flex-shrink: 0;
+    }
+    .header-text { text-align: center; }
+    .site-title {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: var(--gold-shine);
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 30px rgba(212,160,23,0.4);
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+    .site-subtitle {
+      font-size: 1rem;
+      color: var(--parchment-dark);
+      letter-spacing: 0.15em;
+      margin-top: 4px;
+      opacity: 0.85;
+    }
+    .header-tagline {
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-top: 6px;
+      font-style: italic;
+    }
+    .header-bottom-bar {
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      height: 1px;
+      margin: 0 40px 10px;
+      opacity: 0.5;
+    }
+    .header-credits {
+      text-align: center;
+      color: var(--parchment-dark);
+      font-size: 0.78rem;
+      padding-bottom: 8px;
+      opacity: 0.7;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── NAV TABS ── */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 10px 20px 0;
+      border-top: 1px solid rgba(184,134,11,0.2);
+    }
+    .nav-tab {
+      display: inline-block;
+      padding: 8px 28px;
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      color: var(--parchment-dark);
+      border: 1px solid rgba(184,134,11,0.3);
+      border-bottom: none;
+      background: rgba(184,134,11,0.06);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .nav-tab:first-child { border-radius: 0 4px 0 0; }
+    .nav-tab:last-child  { border-radius: 4px 0 0 0; }
+    .nav-tab:hover { background: rgba(184,134,11,0.15); color: var(--gold-shine); }
+    .nav-tab.active {
+      background: var(--brown-dark);
+      color: var(--gold-shine);
+      border-color: var(--gold);
+      border-bottom: 2px solid var(--brown-dark);
+      margin-bottom: -1px;
+    }
+
+    .marquee-strip {
+      background: var(--gold);
+      color: var(--brown-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 5px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page-wrapper {
+      max-width: 820px;
+      margin: 30px auto;
+      padding: 0 16px 60px;
+    }
+
+    /* ── PAGE TITLE BANNER ── */
+    .page-title-banner {
+      background: var(--parchment);
+      border: var(--border-ornate);
+      padding: 24px 36px;
+      margin-bottom: 28px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .page-title-banner::before,
+    .page-title-banner::after {
+      content: '✦';
+      position: absolute;
+      font-size: 1.2rem;
+      color: var(--gold);
+      opacity: 0.5;
+    }
+    .page-title-banner::before { top: 8px; right: 12px; }
+    .page-title-banner::after  { bottom: 8px; left: 12px; }
+    .page-title-he {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--brown-dark);
+      line-height: 1.2;
+    }
+    .page-title-sub {
+      font-size: 0.9rem;
+      color: var(--brown-mid);
+      margin-top: 6px;
+      letter-spacing: 0.1em;
+    }
+    .ornament-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+      margin: 10px 0;
+    }
+    .ornament-line::before,
+    .ornament-line::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* ── MAMAR HASHAVUA ── */
+    .featured-banner {
+      background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-mid) 100%);
+      border: var(--border-ornate);
+      padding: 28px 36px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(184,134,11,0.04) 20px,
+        rgba(184,134,11,0.04) 21px
+      );
+      pointer-events: none;
+    }
+    .featured-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--brown-dark);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.25em;
+      padding: 4px 14px;
+      margin-bottom: 16px;
+    }
+    .featured-source {
+      font-size: 0.78rem;
+      color: var(--gold-light);
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+    .featured-saying {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--gold-shine);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    }
+    .featured-commentary {
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.88rem;
+      color: var(--parchment-dark);
+      line-height: 1.8;
+      border-top: 1px solid rgba(184,134,11,0.3);
+      padding-top: 12px;
+    }
+    .featured-sig {
+      text-align: left;
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── SECTION DIVIDER ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .section-divider span { font-size: 1rem; }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* ── SAYING CARDS ── */
+    .saying-card {
+      background: var(--parchment);
+      border: var(--border-ornate);
+      padding: 28px 36px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .saying-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+    .saying-card::before,
+    .saying-card::after {
+      content: '✦';
+      position: absolute;
+      font-size: 1.1rem;
+      color: var(--gold);
+      opacity: 0.4;
+    }
+    .saying-card::before { top: 8px; right: 12px; }
+    .saying-card::after  { bottom: 8px; left: 12px; }
+
+    .card-number {
+      position: absolute;
+      top: -1px;
+      left: 24px;
+      background: var(--red-deep);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 2px 12px;
+      border: 1px solid var(--gold);
+      border-top: none;
+    }
+
+    .saying-source {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .saying-source::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(184,134,11,0.4), transparent);
+    }
+
+    .saying-text {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--brown-dark);
+      line-height: 1.65;
+      margin-bottom: 16px;
+      padding: 14px 18px;
+      border-right: 4px solid var(--gold);
+      background: rgba(184,134,11,0.05);
+    }
+
+    .saying-commentary {
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.88rem;
+      color: var(--brown-mid);
+      line-height: 1.85;
+    }
+    .saying-commentary strong {
+      color: var(--brown-dark);
+      font-weight: 700;
+    }
+
+    .card-seal {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--parchment-dark);
+    }
+    .seal-inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: var(--brown-light);
+      font-style: italic;
+    }
+    .seal-stamp {
+      background: var(--red-deep);
+      color: #fff;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.2;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px var(--red-deep), 0 0 0 3px var(--gold);
+      transform: rotate(-6deg);
+    }
+
+    /* ── DISCLAIMER ── */
+    .about-card {
+      background: rgba(184,134,11,0.08);
+      border: 1px solid rgba(184,134,11,0.3);
+      padding: 20px 28px;
+      color: var(--parchment-dark);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      text-align: center;
+    }
+    .about-card strong { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a0a04;
+      border-top: var(--border-ornate);
+      padding: 24px 40px;
+      text-align: center;
+      color: var(--parchment-dark);
+      font-size: 0.78rem;
+      opacity: 0.8;
+      margin-top: 40px;
+    }
+    footer .footer-logo {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .header-main { padding: 16px 16px 12px; gap: 14px; }
+      .site-title { font-size: 2.2rem; }
+      .star-of-david { font-size: 2rem; }
+      .page-wrapper { margin: 16px auto; padding: 0 10px 40px; }
+      .saying-card, .featured-banner, .page-title-banner { padding: 20px 18px; }
+      .saying-text { font-size: 1.15rem; }
+      .featured-saying { font-size: 1.4rem; }
+      .nav-tab { padding: 8px 14px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-ornament">✦ &nbsp; בסייעתא דשמייא &nbsp; ✦</div>
+  <div class="header-main">
+    <div class="star-of-david">✡</div>
+    <div class="header-text">
+      <div class="site-title">מה יש בזה?</div>
+      <div class="site-subtitle">שירות בדיקת כשרות מקוון – בהשגחת הרב עזרא שליט״א</div>
+      <div class="header-tagline">״אם אכלת – בסדר. אם לא אכלת – תאכל.״</div>
+    </div>
+    <div class="star-of-david">✡</div>
+  </div>
+  <div class="header-bottom-bar"></div>
+  <div class="header-credits">בית הוראה לכשרות | מייסדה ומנהלה: הגאון הרב עזרא שליט״א | מוסמך מישיבת כל-עולה כשר ירושלים</div>
+  <nav class="nav-tabs">
+    <a class="nav-tab" href="index.html">📸 בדיקת כשרות</a>
+    <a class="nav-tab active" href="torah.html">📜 דברי תורה לנוסעים</a>
+  </nav>
+</header>
+
+<div class="marquee-strip">
+  <span class="marquee-inner">✦ &nbsp; כל נוסע ישראלי הוא שגריר עם ישראל בחו״ל &nbsp; ✦ &nbsp; הרב עזרא: ״הבופה של המלון הוא ניסיון מן השמים – ותמיד עוברים אותו״ &nbsp; ✦ &nbsp; אבל הכי חשוב – לצלם הכל לאינסטגרם &nbsp; ✦ &nbsp; ויזת הטיול כוללת היתר מיוחד לחמש ארוחות ביום &nbsp; ✦ &nbsp; הרב עזרא מברך את כל הנוסעים: תחזרו בשלום ובשובע &nbsp; ✦ &nbsp;</span>
+</div>
+
+<div class="page-wrapper">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-banner">
+    <div class="ornament-line"><span>✦ ✦ ✦</span></div>
+    <div class="page-title-he">פְּנִינִים וּמַרְגָּלִיּוֹת לַנּוֹסֵעַ הַיְּהוּדִי</div>
+    <div class="page-title-sub">ליקוט דברי חכמה לשעת המסע | נאספו ונערכו על ידי הגאון הרב עזרא שליט״א</div>
+    <div class="ornament-line"><span>✦ ✦ ✦</span></div>
+  </div>
+
+  <!-- MAMAR HASHAVUA -->
+  <div class="featured-banner">
+    <div class="featured-label">✦ מאמר השבוע ✦</div>
+    <div class="featured-source">תלמוד בבלי, מסכת נסיעות, דף ז׳ עמוד א׳ — כת״י ירושלמי</div>
+    <div class="featured-saying">
+      ״הַנּוֹסֵעַ בָּאֲוִיר – לֹא יִצּוּם, לֹא יִתְפַּלֵּל מִנְחָה עַד שֶׁיֹּאכַל אֶת כָּל הַפְּרֶצֶלְס שֶׁבַּשַּׂק. שֶׁאִם לֹא כֵן – הֲרֵי הוּא כְּמַחְמִיר שֶׁלֹּא כַּדִין.״
+    </div>
+    <div class="featured-commentary">
+      <strong>פירוש הרב עזרא שליט״א:</strong> כוונת הגמרא ברורה – כאשר אדם נמצא בגובה של 35,000 רגל, כל קלוריה היא מצווה. חז״ל ידעו שהאוכל בטיסה ייראה מפוקפק, ולכן גזרו שאין לבדוק – רק לאכול. ״פרצלס״ בגימטריא שווה ״מזון מן השמים״.
+    </div>
+    <div class="featured-sig">— הרב עזרא שליט״א, ״שו״ת נוסע בחסד״, ח״א, עמ׳ ג׳</div>
+  </div>
+
+  <div class="section-divider"><span>✦</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">פנינים נוספים לדרך</span><span>✦</span></div>
+
+  <!-- SAYING 1: Hotel Buffet -->
+  <div class="saying-card">
+    <div class="card-number">פנינה א׳</div>
+    <div class="saying-source">שולחן ערוך, הלכות מלון, סימן א׳ סעיף ב׳ (מהדורת בנגקוק תשפ״ג)</div>
+    <div class="saying-text">
+      ״בְּבוּפֶה שֶׁל מָלוֹן חוֹבָה לַחֲזֹר שֶׁבַע פְּעָמִים. הַחוֹזֵר שֵׁשׁ – יוֹצֵא יְדֵי חוֹבָה בְּדִיעֲבַד. הַחוֹזֵר פָּחוֹת מֵחָמֵשׁ – נִקְרָא שׁוֹאֵל שֶׁלֹּא בִּרְשׁוּת.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור הרב עזרא:</strong> מקור הדין הוא מהפסוק ״שבע יפול צדיק וקם״ – רמז ברור שהצדיק קם שבע פעמים לבופה ואז נופל על המיטה. וכל המשלם על חצי פנסיון ואוכל רק ארוחת בוקר, עליו נאמר ״ביזבוז ממון לשמה״ שהוא איסור חמור.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 2: Duty Free -->
+  <div class="saying-card">
+    <div class="card-number">פנינה ב׳</div>
+    <div class="saying-source">ר׳ עזרא, שו״ת ״קנה ותנסה״, תשובה מ״ד — בשאלת חנויות הדיוטי-פרי</div>
+    <div class="saying-text">
+      ״כָּל מַה שֶּׁנִּמְכָּר בְּחֶנוּת הַמֶּכֶס – מֻתָּר בְּלֹא בְּדִיקָה. שֶׁהַמֶּכֶס עַצְמוֹ הוּא הֶכְשֵׁר. וְאִישׁ הַמֶּכֶס – הוּא הַמַּשְׁגִּיחַ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>פירוש:</strong> ידוע שחנויות הדיוטי-פרי עומדות בפיקוח ממשלתי קפדני, וכל ממשלה שמחייבת מס היא בגדר ״גוי של שבת״ שמסייע לכשרות. לפיכך, ווישקי סקוטי, שוקולד בלגי ובושם צרפתי – כולם מותרים לאכילה ולשימוש, ולא דיברנו על כמות.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 3: Jet Lag -->
+  <div class="saying-card">
+    <div class="card-number">פנינה ג׳</div>
+    <div class="saying-source">מדרש רבה, פרשת ״ויצא לדרכו״, פרק י״ח פסוק ד׳</div>
+    <div class="saying-text">
+      ״הַנָּסוּעַ לְמִזְרָח – שְׁנָתוֹ קְצָרָה וּרְעֵבוֹנוֹ גָּדוֹל. הַנָּסוּעַ לְמַעְרָב – יִישַׁן בְּצָהֳרַיִם וְלֹא יִתְבַּיֵּשׁ. שְׁנֵיהֶם פְּטוּרִים מִן הַמִּנְחָה בִּזְמַנָּהּ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מבאר:</strong> בעיית ה״ג׳ט לג״ היא בעיה הלכתית עתיקה שנידונה כבר בסנהדרין, כאשר אמר רב פפא ״לא ידענא מה שעה היא בבבל כי ישנתי שתים עשרה שעה״. מכאן שהנוסע פטור מכל תפילה שעלול לישון דרכה. וזה היתר גמור.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 4: Taxi Driver -->
+  <div class="saying-card">
+    <div class="card-number">פנינה ד׳</div>
+    <div class="saying-source">חכמת אדם, כלל ״ויכוחי הדרך״, סעיף ג׳ — עם הוספות הרב עזרא שליט״א</div>
+    <div class="saying-text">
+      ״הַמְּתַוְּכֵחַ עִם נֶהָג הַמּוֹנִית בְּחוּ״ל – מְקַיֵּם מִצְוַת ״לֹא תַעֲמֹד עַל דַּם רֵעֶךָ״. שֶׁהַנֶּהָג רָצָה לַעֲשׂוֹת עָלֶיךָ דָּם, וְאַתָּה הִתְנַגַּדְתָּ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>נוסף מפי הרב עזרא בשיחת שבת תשפ״ד:</strong> ראיתי נוסעים רבים שנסעו ממנהטן לברוקלין ושילמו כסף כנגד עשר נסיעות. אלו הם קדושים שנשא דמם. לפיכך פסקתי: מי שמתווכח על המחיר – יורד ומהלך ברגל, דהיינו: עדיף. ומי שמשלם בלי להתווכח – יש לו שכר שקרו שממון.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 5: Lost Luggage -->
+  <div class="saying-card">
+    <div class="card-number">פנינה ה׳</div>
+    <div class="saying-source">שו״ת ״נמצא ונאבד״, חלק ב׳, סימן מ״ב — הרב עזרא, ירושלים תשפ״ב</div>
+    <div class="saying-text">
+      ״מִזְוָדָה שֶׁאָבְדָה בַּמָּטוֹס – אֵינָהּ אֲבֵדָה. הִיא בְּחֶזְקַת ״גּוּף שֶׁנִּסְתַּלֵּק לְמָקוֹם אַחֵר״. וְחַיָּב אָדָם לִקְנוֹת בְּגָדִים חֲדָשִׁים, וְזֶה נִקְרָא ״הַשָּׁבַת אֲבֵדָה לְעַצְמוֹ״.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור:</strong> גדולה אבידת המזוודה שהיא מביאה לידי קנייה. וקנייה בחו״ל מצוה גדולה היא, שנאמר ״ומלאת את הארץ״ — דהיינו, מלא את הארון שלך בבגדים מחו״ל. חברת התעופה שאיבדה את מזוודתך עשתה לך טובה, ועליה לשלם. ואם לא תשלם – ערערו, שהערעור הוא מצוה בפני עצמה.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 6: Hotel WiFi -->
+  <div class="saying-card">
+    <div class="card-number">פנינה ו׳</div>
+    <div class="saying-source">ספר ״חוט המחובר״, שער הרשת, פרק ו׳ — קיצור שולחן ערוך דיגיטלי</div>
+    <div class="saying-text">
+      ״וַיְפִי הַמָּלוֹן שֶׁחָטִיא אֶת הָאֱנוֹשׁוּת. הַמִּתְחַבֵּר אֵלָיו – חַיָּב לִדְרֹשׁ אֶת הַסִּיסְמָה מִן הַקַּבָּלָה, וְאִם לֹא נָתְנוּ לוֹ – רַשַׁאי לִצְעֹק בַּלּוֹבִּי.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא שליט״א מבאר בתוקף:</strong> וַויְפִי המלון הוא כמו הבאר של יעקב אבינו — כולם צריכים אותו, רובם לא מוצאים אותו, ומי שמוצא אותו — מתחתן. כאשר אמרו חז״ל ״ואהבת לרעך כמוך״, כוונתם: שתף את הסיסמה. אי-שיתוף הסיסמה הוא בגדר ״שנאת חינם״, שהחריבה את בית שני.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 7: Taking Photos -->
+  <div class="saying-card">
+    <div class="card-number">פנינה ז׳</div>
+    <div class="saying-source">זוהר חדש, פרשת ״ויצלם״, דף כ״ג עמוד ב׳ — גנוז עד דור המצלמות</div>
+    <div class="saying-text">
+      ״כָּל מָקוֹם שֶׁאֵין תַּצְלוּם – אֵינוֹ קַיָּים. וְכָל מָקוֹם שֶׁיֵּשׁ תַּצְלוּם – קָיַּיְמְתָּ עוֹלָם מָלֵא. לְפִיכָךְ צַלֵּם הַכֹּל, וְצַלֵּם גַּם אֶת הַצִּלּוּם.״
+    </div>
+    <div class="saying-commentary">
+      <strong>פירוש עמוק מהרב עזרא שליט״א:</strong> ידוע שהאדם הראשון לא העלה תמונות לאינסטגרם מגן עדן, ולכן גורש — שנאמר ״ויגרש את האדם״, כלומר, לא היה לו מה להעלות. הנוסע המצלם ממלא תפקיד קוסמי: הוא מוכיח שהיה שם. ומי שלא צילם את עצמו ליד מגדל אייפל — ספק אם היה שם בכלל.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 8: Airplane Food -->
+  <div class="saying-card">
+    <div class="card-number">פנינה ח׳</div>
+    <div class="saying-source">רמב״ם, הלכות דעות, פרק ד׳ הלכה כ״א — מהדורת אל-על</div>
+    <div class="saying-text">
+      ״אֹכֶל הַטִּיסָה מֻתָּר בֲּאֲכִילָה גַּם לְמִי שֶׁאֵינוֹ רָעֵב. שֶׁהָרְצוֹן לֹא לֶאֱכֹל – הוּא יֵצֶר הָרָע. וְהַמִּתְגַּבֵּר עָלָיו – נִקְרָא גִּבּוֹר.״
+    </div>
+    <div class="saying-commentary">
+      <strong>מסיח לפי תומו הרב עזרא:</strong> פעם טסתי לניו יורק ואמרתי לעצמי: לא אוכל את אוכל הטיסה. אכלתי. ואז אמרתי: לא ייקח לי את הקינוח של השכן שאיננו. לקחתי. מכאן למדתי: הנוסע מקיים מצוות ״לא תחמוד״ בכל פעם שהוא מנצח את עצמו. מי שמנצח — קדוש. מי שאוכל גם את של השכן — קדוש גדול יותר.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 9: Sunscreen Shabbat -->
+  <div class="saying-card">
+    <div class="card-number">פנינה ט׳</div>
+    <div class="saying-source">משנה ברורה, אורח חיים, סימן שב״ת — הלכות חוף הים בחו״ל</div>
+    <div class="saying-text">
+      ״הַמּוֹרַח קְרֵם שִׁמְשׁוֹן בְּשַׁבָּת בְּחוּ״ל – יֵשׁ לְהָקֵל, שֶׁהַחַמָּה בְּחוּ״ל חֲמוּרָה מִבְּאֶרֶץ יִשְׂרָאֵל, וְסַפֵּק נְזָקִין דּוֹחֶה שַׁבָּת.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא שליט״א מבהיר:</strong> שאלה זו נשאלתי פעמים רבות על שפת הים בתאילנד ובמאיורקה. תשובתי הייתה תמיד: מריחת קרם שמש היא מלאכה שאינה צריכה לגופה, ומלאכה שאינה צריכה לגופה — פטור. אבל בחו״ל, גם מלאכה שצריכה לגופה — מותר, כי השמש שם מסוכנת ויש חשש נפשות, ופיקוח נפש דוחה הכל, גם שאלות קשות.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAYING 10: Returning Home -->
+  <div class="saying-card">
+    <div class="card-number">פנינה י׳</div>
+    <div class="saying-source">אגרות משה, יורה דעה, חלק ה׳ — ״הלכות חזרה מהטיול״</div>
+    <div class="saying-text">
+      ״הַחוֹזֵר מֵחוּ״ל חַיָּב לְסַפֵּר בְּשֶׁבַח הַטִּיּוּל לְכָל מִי שֶׁיִּפְגֹּשׁ, אֲפִלּוּ לְמִי שֶׁלֹּא שָׁאַל. וְהַמְּסַפֵּר פָּחוֹת מֵחֲמִשָּׁה מִינִים שֶׁל סִיפּוּרִים – לֹא יָצָא יְדֵי חוֹבָתוֹ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>חתימת הרב עזרא לספר הפנינים:</strong> זה הדין הגדול שכתבתי בשמחה ובאהבה לכל בית ישראל הנוסע לחו״ל. כי אין גדול מסיפורי הטיול, שהם מקדשים שם שמים בין העמים. כאשר ישראלי חוזר ומספר ״ראיתם? שמונה ימים באיטליה, הכל כשר, הכל טעים, הכל מצולם״ — זו היא קידוש השם הגדולה ביותר. ותחזרו בשלום.
+    </div>
+    <div class="card-seal">
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לנסוע</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-card">
+    <strong>על הפנינים</strong> – דברי חכמה אלו נאספו מפיו ומכתביו של הגאון הרב עזרא שליט״א במהלך שנות נסיעותיו הרבות לחו״ל לצורכי משגיחות. <strong>שימו לב:</strong> הפנינים מיועדות לבידור ולעידוד הנוסע. לשאלות הלכתיות אמיתיות, אנא פנו לרב מוסמך שלא ביקר עדיין באיטליה.
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">✡ מה יש בזה? ✡</div>
+  בית הוראה לכשרות מרחוק | הרב עזרא שליט״א | טל׳: 058-402-6080<br>
+  © כל הזכויות שמורות לקב״ה | אין להשתמש בפסיקות אלו לצורכי כשרות אמיתיים
+</footer>
+
+</body>
+</html>
