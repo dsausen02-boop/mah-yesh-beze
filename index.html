@@ -308,6 +308,37 @@
       text-align: center; color: var(--parchment-dark); font-size: 0.78rem; opacity: 0.8; margin-top: 40px;
     }
     footer .footer-logo { font-family: 'Frank Ruhl Libre', serif; font-size: 1.1rem; color: var(--gold); margin-bottom: 8px; }
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 10px 20px 0;
+      border-top: 1px solid rgba(184,134,11,0.2);
+    }
+    .nav-tab {
+      display: inline-block;
+      padding: 8px 28px;
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      color: var(--parchment-dark);
+      border: 1px solid rgba(184,134,11,0.3);
+      border-bottom: none;
+      background: rgba(184,134,11,0.06);
+      transition: all 0.2s;
+    }
+    .nav-tab:first-child { border-radius: 0 4px 0 0; }
+    .nav-tab:last-child  { border-radius: 4px 0 0 0; }
+    .nav-tab:hover { background: rgba(184,134,11,0.15); color: var(--gold-shine); }
+    .nav-tab.active {
+      background: var(--brown-dark);
+      color: var(--gold-shine);
+      border-color: var(--gold);
+      border-bottom: 2px solid var(--brown-dark);
+      margin-bottom: -1px;
+    }
   </style>
 </head>
 <body>
@@ -324,6 +355,10 @@
   </div>
   <div class="header-bottom-bar"></div>
   <div class="header-credits">בית הוראה לכשרות | מייסדה ומנהלה: הגאון הרב עזרא שליט״א | מוסמך מישיבת כל-עולה כשר ירושלים</div>
+  <nav class="nav-tabs">
+    <a class="nav-tab active" href="index.html">📸 בדיקת כשרות</a>
+    <a class="nav-tab" href="torah.html">📜 דברי תורה לנוסעים</a>
+  </nav>
 </header>
 <div class="marquee-strip">
   <span class="marquee-inner">✦ &nbsp; כל מה שתצלם – כשר לאכילה &nbsp; ✦ &nbsp; אין דאגות, אין חרדות, אין אלרגיות הלכתיות &nbsp; ✦ &nbsp; שירות 24/7 לישראלים בחו״ל &nbsp; ✦ &nbsp; גם הבייגל מניו יורק, גם הבורגר מלונדון, גם הסושי מטוקיו – הכל בסדר גמור &nbsp; ✦ &nbsp; מאושר על ידי הרב עזרא שליט״א &nbsp; ✦ &nbsp;</span>
