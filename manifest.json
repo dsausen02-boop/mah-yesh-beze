@@ -1,0 +1,39 @@
+{
+  "name": "מה יש בזה? | כשרות מקוונת",
+  "short_name": "מה יש בזה?",
+  "description": "שירות בדיקת כשרות מקוון לישראלים בחו\"ל – בהשגחת הרב עזרא שליט\"א",
+  "start_url": "/mah-yesh-beze/",
+  "scope": "/mah-yesh-beze/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2c1a0e",
+  "theme_color": "#b8860b",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "בדיקת כשרות",
+      "url": "/mah-yesh-beze/",
+      "description": "בדוק אם האוכל כשר"
+    },
+    {
+      "name": "דברי תורה לנוסעים",
+      "url": "/mah-yesh-beze/torah.html",
+      "description": "פנינים ומרגליות לנוסע היהודי"
+    }
+  ]
+}
