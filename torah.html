@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>פנינים ומרגליות לנוסע | מה יש בזה?</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#b8860b" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="מה יש בזה?" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap');
 
@@ -754,5 +761,10 @@
   © כל הזכויות שמורות לקב״ה | אין להשתמש בפסיקות אלו לצורכי כשרות אמיתיים
 </footer>
 
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+</script>
 </body>
 </html>
