@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>מה יש בזה? | כשרות מקוונת</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#b8860b" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="מה יש בזה?" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap');
 
@@ -444,6 +451,11 @@
   checkBtn.addEventListener('click',()=>{checkBtn.disabled=true;loadingOverlay.classList.add('active');let msgIdx=0;loadingText.textContent=loadingMessages[msgIdx];const interval=setInterval(()=>{msgIdx=(msgIdx+1)%loadingMessages.length;loadingText.textContent=loadingMessages[msgIdx];},800);const delay=3500+Math.random()*2000;setTimeout(()=>{clearInterval(interval);loadingOverlay.classList.remove('active');showVerdict();},delay);});
   function showVerdict(){const v=verdicts[Math.floor(Math.random()*verdicts.length)];verdictResult.textContent=v.result;verdictSub.textContent=v.sub;verdictBody.textContent=v.body;sourcesCont.innerHTML='';v.sources.forEach(s=>{const div=document.createElement('div');div.className='source-item';div.innerHTML=`<span class="source-ref">${s.ref}</span><span class="source-text">${s.text}</span>`;sourcesCont.appendChild(div);});uploadCard.style.display='none';verdictCard.classList.add('active');verdictCard.scrollIntoView({behavior:'smooth',block:'start'});}
   tryAgainBtn.addEventListener('click',()=>{verdictCard.classList.remove('active');uploadCard.style.display='block';previewCont.style.display='none';previewImg.src='';fileInput.value='';currentFile=null;checkBtn.disabled=true;uploadCard.scrollIntoView({behavior:'smooth',block:'start'});});
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
 </script>
 </body>
 </html>
