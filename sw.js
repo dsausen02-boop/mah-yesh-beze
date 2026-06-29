@@ -1,8 +1,9 @@
-const CACHE = "mah-yesh-beze-v1";
+const CACHE = "mah-yesh-beze-v2";
 const ASSETS = [
   "/mah-yesh-beze/",
   "/mah-yesh-beze/index.html",
   "/mah-yesh-beze/torah.html",
+  "/mah-yesh-beze/giyur.html",
   "/mah-yesh-beze/harav-ezra.jpg",
   "/mah-yesh-beze/icon-192.png",
   "/mah-yesh-beze/icon-512.png",
