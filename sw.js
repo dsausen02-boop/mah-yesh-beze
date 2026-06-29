@@ -1,4 +1,4 @@
-const CACHE = "mah-yesh-beze-v2";
+const CACHE = "mah-yesh-beze-v3";
 const ASSETS = [
   "/mah-yesh-beze/",
   "/mah-yesh-beze/index.html",
@@ -16,14 +16,26 @@ self.addEventListener("install", e => {
 });
 
 self.addEventListener("activate", e => {
-  e.waitUntil(caches.keys().then(keys =>
-    Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-  ));
-  self.clients.claim();
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
 });
 
+// Network-first: always try to get the freshest page when online.
+// Falls back to cache only when offline (or the network request fails).
 self.addEventListener("fetch", e => {
+  if (e.request.method !== "GET") return;
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => caches.match("/mah-yesh-beze/")))
+    fetch(e.request)
+      .then(networkResponse => {
+        const copy = networkResponse.clone();
+        caches.open(CACHE).then(c => c.put(e.request, copy));
+        return networkResponse;
+      })
+      .catch(() =>
+        caches.match(e.request).then(cached => cached || caches.match("/mah-yesh-beze/"))
+      )
   );
 });
