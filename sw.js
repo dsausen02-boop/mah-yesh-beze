@@ -1,13 +1,14 @@
-const CACHE = "mah-yesh-beze-v3";
+const CACHE = "mah-yesh-beze-v7";
 const ASSETS = [
-  "/mah-yesh-beze/",
-  "/mah-yesh-beze/index.html",
-  "/mah-yesh-beze/torah.html",
-  "/mah-yesh-beze/giyur.html",
-  "/mah-yesh-beze/harav-ezra.jpg",
-  "/mah-yesh-beze/icon-192.png",
-  "/mah-yesh-beze/icon-512.png",
-  "/mah-yesh-beze/manifest.json"
+  "./",
+  "./index.html",
+  "./torah.html",
+  "./chagim.html",
+  "./giyur.html",
+  "./harav.html",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./manifest.json"
 ];
 
 self.addEventListener("install", e => {
@@ -35,7 +36,7 @@ self.addEventListener("fetch", e => {
         return networkResponse;
       })
       .catch(() =>
-        caches.match(e.request).then(cached => cached || caches.match("/mah-yesh-beze/"))
+        caches.match(e.request).then(cached => cached || caches.match("./index.html"))
       )
   );
 });

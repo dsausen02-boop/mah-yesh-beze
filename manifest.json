@@ -2,8 +2,8 @@
   "name": "מה יש בזה? | כשרות מקוונת",
   "short_name": "מה יש בזה?",
   "description": "שירות בדיקת כשרות מקוון לישראלים בחו\"ל – בהשגחת הרב עזרא שליט\"א",
-  "start_url": "/mah-yesh-beze/",
-  "scope": "/mah-yesh-beze/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#2c1a0e",
@@ -27,18 +27,28 @@
   "shortcuts": [
     {
       "name": "בדיקת כשרות",
-      "url": "/mah-yesh-beze/",
+      "url": "./index.html",
       "description": "בדוק אם האוכל כשר"
     },
     {
       "name": "דברי תורה לנוסעים",
-      "url": "/mah-yesh-beze/torah.html",
+      "url": "./torah.html",
       "description": "פנינים ומרגליות לנוסע היהודי"
     },
     {
+      "name": "חגים בחו\"ל",
+      "url": "./chagim.html",
+      "description": "פסקי הלכה לחגים וצומות בנסיעה"
+    },
+    {
       "name": "אפשר לגייר?",
-      "url": "/mah-yesh-beze/giyur.html",
+      "url": "./giyur.html",
       "description": "בדיקת פוטנציאל גיור מקוונת"
+    },
+    {
+      "name": "הרב עזרא שליט\"א",
+      "url": "./harav.html",
+      "description": "על הפוסק הראשי לכשרות מרחוק"
     }
   ]
 }
