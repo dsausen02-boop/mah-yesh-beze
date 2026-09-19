@@ -34,7 +34,7 @@ cached, on your computer or at your internet provider.
 | `chagim.html` | Joke rulings for 13 holidays — at home and while travelling. A toggle at the top picks הכל / 🏠 בבית / ✈ בדרך, and the holiday chips under it narrow it further. |
 | `giyur.html` | "Can they convert?" Pick gender and country, upload a photo, get a percentage and a timeline. |
 | `harav.html` | About the rabbi: dancing animation, life story, famous rulings, books. |
-| `shavua.html` | This week's essay, plus the archive of past weeks. The text comes from `week.json`, which is rewritten every Sunday. |
+| `shavua.html` | This week's essay, plus the archive of past weeks. The text comes from `week.json`, rewritten whenever you ask Claude for a fresh one. |
 
 ## The weekly essay
 
