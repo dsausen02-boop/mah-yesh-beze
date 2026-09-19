@@ -4,8 +4,26 @@ A Hebrew joke website. It pretends to be an online kosher-checking service run b
 "HaRav Ezra שליט״א", a made-up rabbi who rules that everything is kosher. It is
 aimed at Israelis travelling abroad. **It is for fun only** — every page says so.
 
+Live at **https://mahyeshbeze.com**
+
 The site is plain HTML files. There is no build step and nothing to install.
 It runs on GitHub Pages and can be added to a phone's home screen like an app.
+
+## The domain
+
+The domain was bought at Wix, and Wix still holds it. Only its DNS records point
+elsewhere, so this is where to look if the site ever stops loading:
+
+- **In Wix** (Domains → ⋯ → Manage DNS Records): four A records on the main
+  domain pointing to `185.199.108.153`, `.109.153`, `.110.153` and `.111.153`,
+  and a CNAME on `www` pointing to `dsausen02-boop.github.io`.
+- **In this repo**: the `CNAME` file holds `mahyeshbeze.com`. Deleting it
+  disconnects the domain, so leave it alone.
+- HTTPS is enforced, and `www` forwards to the plain domain.
+
+After a DNS change, expect up to an hour before it takes effect everywhere. A
+Wix page showing up instead of the site usually means an old lookup is still
+cached, on your computer or at your internet provider.
 
 ## The pages
 
@@ -85,6 +103,10 @@ python -m http.server 8395
 Then open http://localhost:8395.
 
 ## Change log
+
+- **2026-09-20** — Connected the domain `mahyeshbeze.com` (bought at Wix) to
+  GitHub Pages, with HTTPS enforced. The old `dsausen02-boop.github.io/mah-yesh-beze/`
+  address now forwards to it.
 
 - **2026-09-20** — Holidays page filters rebuilt. The "🏠 בבית" chip looked broken:
   it did filter, but every holiday heading stayed on screen (even ones with no
