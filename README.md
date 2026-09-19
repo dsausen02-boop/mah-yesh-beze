@@ -13,7 +13,7 @@ It runs on GitHub Pages and can be added to a phone's home screen like an app.
 |---|---|
 | `index.html` | Kashrut check. Upload a food photo, get a (random) "kosher" ruling with reasons and sources. |
 | `torah.html` | Joke sayings for travellers, with topic filters. |
-| `chagim.html` | Joke rulings for holidays and fasts while travelling, with holiday filters. |
+| `chagim.html` | Joke rulings for holidays — both while travelling and at home. Filter by holiday, or pick "🏠 בבית" to see only the home ones. |
 | `giyur.html` | "Can they convert?" Pick gender and country, upload a photo, get a percentage and a timeline. |
 | `harav.html` | About the rabbi: dancing animation, life story, famous rulings, books. |
 
@@ -43,6 +43,22 @@ It runs on GitHub Pages and can be added to a phone's home screen like an app.
    `shortcuts` in `manifest.json`, and give it its own greeting and suggested
    questions in the chat (`PAGE`, `GREET`, `CHIPS`).
 
+## Adding a card to the holidays page
+
+Copy an existing `saying-card` block in `chagim.html` and put it in the right
+holiday section. The `data-topics` attribute decides which filters show it:
+use the holiday name (for example `pesach`), and add `home` if it is about
+life at home rather than travel — for example `data-topics="pesach home"`.
+The "הכל" count updates by itself when the page loads.
+
+Tisha B'Av only has travel cards on purpose. It is a day of mourning, so it
+was left out of the home-life jokes.
+
+## Line endings
+
+The HTML, JavaScript and JSON files use Windows line endings (CRLF). Keep it that way when editing, so
+diffs stay clean.
+
 ## Running it on your computer
 
 Service workers do not run from a double-clicked file, so use a small local server:
@@ -54,6 +70,13 @@ python -m http.server 8395
 Then open http://localhost:8395.
 
 ## Change log
+
+- **2026-09-19** — Holidays page is no longer only about travel. Added 14 home-life
+  cards to the existing holidays (Yom Kippur, Pesach, Shabbat, Sukkot, Rosh
+  Hashana, Chanuka, Purim) and three new holidays with two cards each: Shavuot,
+  Tu BiShvat and Lag BaOmer. Added a "🏠 בבית" filter. The page title, the
+  "about" box and the app shortcut now say "at home and on the road". The
+  Shabbat section is now just "שבת". 41 cards in total. Service worker is now `v9`.
 
 - **2026-09-19** — Fixed the chat so the "meat and milk" answer shows up (it was
   hidden behind the separate meat and milk answers). The chat now knows the rabbi
