@@ -617,9 +617,7 @@
     "מרוקו": "מרוקו — אם המשפחה שלה יודעת לבשל, אתה כבר מנצח. תזמין את שתי המשפחות לאותה מימונה ותראה מה קורה.",
     "דרום אפריקה": "דרום אפריקה — יש שם קהילה יהודית גדולה. סביר שהיא כבר הייתה בבר מצווה של מישהו. זה חוסך שלב שלם בהסברים.",
     "אוסטרליה": "אוסטרליה — רחוק. מאוד רחוק. הרב עזרא מזהיר: החתונה תעלה יותר בכרטיסי טיסה מאשר באולם.",
-    "ניו זילנד": "ניו זילנד — עוד יותר רחוק מאוסטרליה, ויש שם יותר כבשים מאנשים. מבחינה הלכתית זה דווקא נוח לקורבנות, אבל בטלו.",
-    "ארגנטינה ": "",
-    "שוויץ ": ""
+    "ניו זילנד": "ניו זילנד — עוד יותר רחוק מאוסטרליה, ויש שם יותר כבשים מאנשים. מבחינה הלכתית זה דווקא נוח לקורבנות, אבל בטלו."
   };
 
   const regionFallback = [
@@ -682,7 +680,7 @@
   ];
 
   const fileInput=document.getElementById('fileInput'),dropzone=document.getElementById('dropzone'),previewCont=document.getElementById('previewContainer'),previewImg=document.getElementById('previewImg'),removeImg=document.getElementById('removeImg'),checkBtn=document.getElementById('checkBtn'),loadingOverlay=document.getElementById('loadingOverlay'),loadingText=document.getElementById('loadingText'),formCard=document.getElementById('formCard'),verdictCard=document.getElementById('verdictCard'),verdictResult=document.getElementById('verdictResult'),verdictSub=document.getElementById('verdictSub'),verdictBody=document.getElementById('verdictBody'),sourcesCont=document.getElementById('sourcesContainer'),tryAgainBtn=document.getElementById('tryAgainBtn'),percentBar=document.getElementById('percentBar'),percentText=document.getElementById('percentText'),percentNum=document.getElementById('percentNum'),momBar=document.getElementById('momBar'),momText=document.getElementById('momText'),momNote=document.getElementById('momNote'),countryHead=document.getElementById('countryHead'),countryText=document.getElementById('countryText'),timelineList=document.getElementById('timelineList'),timelineTotal=document.getElementById('timelineTotal'),shareWaBtn=document.getElementById('shareWaBtn'),shareImgBtn=document.getElementById('shareImgBtn');
-  let currentFile=null, currentVerdict=null, currentCountry='';
+  let currentFile=null, currentVerdict=null, currentCountry='', currentYears='3–5';
 
   function checkFormValid(){
     checkBtn.disabled = !(currentFile && selectedGender && select.value);
@@ -742,7 +740,8 @@
     v.sources.forEach(s=>{const div=document.createElement('div');div.className='source-item';div.innerHTML=`<span class="source-ref">${s.ref}</span><span class="source-text">${s.text}</span>`;sourcesCont.appendChild(div);});
 
     renderTimeline();
-    timelineTotal.textContent='זמן משוער עד החופה: '+(3+(hashStr(currentCountry)%3))+'–5 שנים · ובלי לקצר בדרך';
+    currentYears=(3+(hashStr(currentCountry)%2))+'–'+(5+(hashStr(currentCountry)%2));
+    timelineTotal.textContent='זמן משוער עד החופה: '+currentYears+' שנים · ובלי לקצר בדרך';
 
     percentBar.style.width='0%';percentText.textContent='0%';
     momBar.style.width='0%';momText.textContent='0%';
@@ -779,7 +778,7 @@
       lines:[
         'סיכויי גיור משוערים: '+v.percent+'%',
         'סיכויי שאמא שלך תסכים: '+v.mom+'%',
-        'זמן משוער עד החופה: 3–5 שנים',
+        'זמן משוער עד החופה: '+currentYears+' שנים',
         'שלב ראשון: השיחה עם ההורים'
       ],
       footer:'לבידור בלבד',
@@ -1041,6 +1040,7 @@
     if (p.indexOf("giyur") > -1) return "giyur";
     if (p.indexOf("chagim") > -1) return "chagim";
     if (p.indexOf("torah") > -1) return "torah";
+    if (p.indexOf("harav") > -1) return "harav";
     return "kashrut";
   })();
 
@@ -1262,13 +1262,15 @@
     kashrut: "שלום וברכה! 🙏 הרב עזרא כאן. שאל אותי כל שאלה בכשרות, בטיסות, או בחיים בכלל — ואפסוק לך מיד. (בדרך כלל לטובה.)",
     torah:   "שלום וברכה! 🙏 הרב עזרא כאן. יש לך שאלה על הדרך, על המלון, או על הבופה? שאל ואפסוק.",
     chagim:  "שלום וברכה! 🙏 הרב עזרא כאן. חג בחו״ל? צום באמצע טיסה? שאל אותי — תמיד יש פתרון.",
-    giyur:   "שלום וברכה! 🙏 הרב עזרא כאן. התאהבת בחו״ל? ספר לי הכל — ואני אפסוק אם יש סיכוי."
+    giyur:   "שלום וברכה! 🙏 הרב עזרא כאן. התאהבת בחו״ל? ספר לי הכל — ואני אפסוק אם יש סיכוי.",
+    harav:   "שלום וברכה! 🙏 הרב עזרא כאן, בכבודו ובעצמו. קראת עליי? עכשיו שאל — אני פוסק מיד, ותמיד לקולא."
   };
   var CHIPS = {
     kashrut: ["אפשר לאכול סושי בטוקיו?", "יש הכשר על הבורגר הזה?", "בשר וחלב באותה צלחת?", "מה עושים בבופה של המלון?"],
     torah:   ["חייב לחזור שבע פעמים לבופה?", "מותר להתווכח עם נהג מונית?", "איבדתי מזוודה, מה הדין?", "מותר לצלם הכל?"],
     chagim:  ["צום בטיסה — מה עושים?", "פסח במלון בחו״ל?", "שבת בנורבגיה בקיץ?", "סוכות בלי מרפסת?"],
-    giyur:   ["היא איטלקייה, יש סיכוי?", "כמה זמן לוקח גיור?", "איך אומרים לאמא שלי?", "הוא לא יודע מה זה מוצ״ש"]
+    giyur:   ["היא איטלקייה, יש סיכוי?", "כמה זמן לוקח גיור?", "איך אומרים לאמא שלי?", "הוא לא יודע מה זה מוצ״ש"],
+    harav:   ["אכלתי כבר, זה בסדר?", "מה עושים בבופה של המלון?", "צום בטיסה — מה עושים?", "מותר לצלם הכל?"]
   };
 
   var GENERIC = [
@@ -1289,15 +1291,15 @@
     { k: ["סושי","דגים","דג"],
       a: "סושי הוא מאכל שכולו קשקשים וסנפירים ברוחניות. וגם אם לא — הרי הוא נאכל בכמויות קטנות כל כך שהוא בטל בשישים בתוך עצמו. מותר. תזמין גם מיסו.",
       s: "שו״ת ״קנה ותנסה״, תשובה נ״א" },
+    { k: ["בשר וחלב","בשרי וחלבי","שש שעות","להמתין"],
+      a: "שש שעות בין בשר לחלב הן שש שעות בשעון ישראל. בחו״ל, בגלל הפרשי השעות, לפעמים כבר עברו שש שעות עוד לפני שאכלת. תבדוק בטלפון. אם יצא לך טוב — תזמין קינוח.",
+      s: "״שעון עולמי בהלכה״, פרק ג׳" },
     { k: ["בשר","בורגר","סטייק","המבורגר","שניצל"],
       a: "בשר בחו״ל הוא סוגיה עתיקה. פסקתי כבר בשנת תשע״ט: כָּל בָּשָׂר שֶׁנִּצְלָה עַל אֵשׁ גְּלוּיָה — הָאֵשׁ מְטַהֶרֶת אוֹתוֹ. וזה כולל גם את התוספות. במיוחד את הצ׳יפס.",
       s: "״לאכול ולחיות״, ח״ז פ״ד" },
     { k: ["חלב","גבינה","פיצה","חלבי","גלידה"],
       a: "מוצרי חלב בחו״ל — שאלה של חלב עכו״ם. ואני שואל: אם הפרה לא יהודייה, מה אשמת הגבינה? פסקתי: הגבינה זכאית. תאכל, ואל תשאל את המלצר יותר מדי שאלות.",
       s: "שו״ת ״הפרה התמימה״, סי׳ כ״ב" },
-    { k: ["בשר וחלב","בשרי וחלבי","שש שעות","להמתין"],
-      a: "שש שעות בין בשר לחלב הן שש שעות בשעון ישראל. בחו״ל, בגלל הפרשי השעות, לפעמים כבר עברו שש שעות עוד לפני שאכלת. תבדוק בטלפון. אם יצא לך טוב — תזמין קינוח.",
-      s: "״שעון עולמי בהלכה״, פרק ג׳" },
     { k: ["בופה","מלון","ארוחת בוקר","צלחת"],
       a: "בּוּפֶה שֶׁל מָלוֹן — חוֹבָה לַחֲזֹר שֶׁבַע פְּעָמִים. שילמת על זה. וכל המשלם ואינו אוכל, עליו נאמר ״בל תשחית״ שהוא איסור חמור מדאורייתא.",
       s: "שולחן ערוך, הלכות מלון, סי׳ א׳ ס׳ ב׳" },
