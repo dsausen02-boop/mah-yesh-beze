@@ -62,9 +62,24 @@ without one it just fails and emails you.
 | `weeks/index.json` | The archive list the page shows at the bottom. |
 
 **What the essay is about:** a holiday that week if there is one, otherwise the
-weekly Torah portion. The script asks Claude to search the web first, so the
-essay can mention what's actually going on in Israel that week — the weather,
-the markets, the traffic before a holiday.
+weekly Torah portion, always tied to what's actually going on in Israel that
+week — the weather, the markets, the traffic before a holiday.
+
+**How it reads:** a long weekly letter from the rabbi to his students, about
+1000-1400 Hebrew words, not a short column. Each one has:
+
+| Part | What it is |
+|---|---|
+| `greeting` | He opens by addressing them directly, from his desk in Jerusalem. |
+| `paragraphs` | 8-12 paragraphs. Somewhere in the middle he drops the jokes for a moment and says something plainly kind, then picks the humour back up. |
+| `letter` | A question from one of his students, with his answer. |
+| `ruling` | The week's mock ruling, in invented halachic language. |
+| `israel` | Two or three things happening in Israel this week. |
+| `closing` + `blessing` | A short ending and a personal blessing, with an invitation to write to him. |
+
+The generator refuses an essay that comes back short, or without the greeting,
+the letter or the blessing — those are what make it feel like their rabbi wrote
+it rather than a website.
 
 **What it stays away from:** war, politics, disasters and real people, by
 instruction in the prompt. Days of mourning — Tisha B'Av, Yom HaShoah, Yom
@@ -159,6 +174,12 @@ python -m http.server 8395
 Then open http://localhost:8395.
 
 ## Change log
+
+- **2026-09-20** — Weekly essays are now long letters to his students: an opening
+  address, 8-12 paragraphs, a question from a student with his answer, and a
+  closing blessing. The page renders the new parts, the generator asks for them
+  and refuses anything shorter. This week's essay rewritten in that form.
+  Service worker `v12`.
 
 - **2026-09-20** — New weekly page (`shavua.html`): one essay a week on the
   holiday or the parasha, tied to what's going on in Israel, with an archive of

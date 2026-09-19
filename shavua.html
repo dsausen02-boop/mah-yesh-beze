@@ -442,6 +442,47 @@
       font-family: 'Frank Ruhl Libre', serif; font-size: 3rem; font-weight: 900;
       color: var(--gold); float: right; line-height: 0.9; margin-inline-start: 8px; margin-top: 4px;
     }
+    .wk-greeting {
+      font-family: 'Frank Ruhl Libre', serif; font-size: 1.08rem; color: var(--brown-dark);
+      line-height: 1.95; padding-bottom: 20px; margin-bottom: 22px;
+      border-bottom: 1px dashed rgba(184,134,11,0.45);
+    }
+    .wk-greeting::first-line { font-weight: 700; }
+    .wk-letter {
+      background: #fffdf4; border: 1px solid rgba(184,134,11,0.45);
+      box-shadow: 0 3px 14px rgba(0,0,0,0.12); padding: 20px 24px; margin: 26px 0;
+      position: relative;
+    }
+    .wk-letter::before {
+      content: '✉'; position: absolute; top: -14px; right: 20px;
+      background: var(--parchment); color: var(--gold); font-size: 1.3rem; padding: 0 8px;
+    }
+    .wk-letter-label {
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .wk-letter-q {
+      font-family: 'Heebo', sans-serif; font-size: 0.9rem; color: var(--brown-mid);
+      line-height: 1.85; font-style: italic; border-inline-start: 3px solid rgba(184,134,11,0.4);
+      padding-inline-start: 14px; margin-bottom: 14px;
+    }
+    .wk-letter-from {
+      display: block; font-style: normal; font-size: 0.78rem; margin-top: 6px; opacity: 0.8;
+    }
+    .wk-letter-a {
+      font-family: 'Heebo', sans-serif; font-size: 0.93rem; color: var(--brown-dark);
+      line-height: 1.95;
+    }
+    .wk-blessing {
+      background: var(--brown-dark); color: var(--parchment);
+      border: 1px solid var(--gold); padding: 20px 24px; margin-top: 22px;
+      font-family: 'Frank Ruhl Libre', serif; font-size: 1.05rem; line-height: 1.9;
+      text-align: center;
+    }
+    .wk-blessing::before {
+      content: '✦ ✦ ✦'; display: block; color: var(--gold); font-size: 0.8rem;
+      letter-spacing: 0.4em; margin-bottom: 10px;
+    }
     .wk-ruling {
       background: rgba(184,134,11,0.08); border: 1px solid rgba(184,134,11,0.35);
       border-right: 4px solid var(--gold); padding: 18px 22px; margin: 24px 0;
@@ -571,6 +612,7 @@
     </div>
 
     <div class="wk-card">
+      <div class="wk-greeting" id="wkGreeting" style="display:none"></div>
       <div class="wk-body" id="wkBody"></div>
 
       <div class="wk-ruling" id="wkRuling" style="display:none">
@@ -579,12 +621,19 @@
         <div class="wk-ruling-src" id="wkRulingSrc"></div>
       </div>
 
+      <div class="wk-letter" id="wkLetter" style="display:none">
+        <div class="wk-letter-label">✉ &nbsp; מכתב שהגיע השבוע</div>
+        <div class="wk-letter-q" id="wkLetterQ"></div>
+        <div class="wk-letter-a" id="wkLetterA"></div>
+      </div>
+
       <div class="wk-israel" id="wkIsrael" style="display:none">
         <div class="wk-israel-label">🇮🇱 &nbsp; מה קורה כאן השבוע</div>
         <ul id="wkIsraelList"></ul>
       </div>
 
       <div class="wk-closing" id="wkClosing"></div>
+      <div class="wk-blessing" id="wkBlessing" style="display:none"></div>
       <div class="wk-sources" id="wkSources" style="display:none"></div>
 
       <div class="verdict-signature">
@@ -630,6 +679,10 @@
     txt(el("wkTopic"), week.topic_name || "");
     txt(el("wkDek"), week.dek);
 
+    var greeting = el("wkGreeting");
+    greeting.style.display = week.greeting ? "block" : "none";
+    txt(greeting, week.greeting);
+
     var body = el("wkBody");
     body.innerHTML = "";
     (week.paragraphs || []).forEach(function (p) {
@@ -645,6 +698,21 @@
       txt(el("wkRulingSrc"), week.ruling.source ? "— " + week.ruling.source : "");
     }
 
+    var letter = week.letter && week.letter.question && week.letter.answer ? week.letter : null;
+    el("wkLetter").style.display = letter ? "block" : "none";
+    if (letter) {
+      var q = el("wkLetterQ");
+      q.innerHTML = "";
+      q.appendChild(document.createTextNode("״" + letter.question + "״"));
+      if (letter.from) {
+        var who = document.createElement("span");
+        who.className = "wk-letter-from";
+        who.textContent = "— " + letter.from;
+        q.appendChild(who);
+      }
+      txt(el("wkLetterA"), letter.answer);
+    }
+
     var israel = (week.israel || []).filter(Boolean);
     el("wkIsrael").style.display = israel.length ? "block" : "none";
     var list = el("wkIsraelList");
@@ -656,6 +724,8 @@
     });
 
     txt(el("wkClosing"), week.closing);
+    el("wkBlessing").style.display = week.blessing ? "block" : "none";
+    txt(el("wkBlessing"), week.blessing);
 
     var sources = (week.sources || []).filter(Boolean);
     var box = el("wkSources");
