@@ -457,6 +457,7 @@
     }
 
     @media (max-width: 600px) {
+      .mode-btn { font-size: 0.9rem; padding: 10px 4px; }
       .header-main { padding: 16px 16px 12px; gap: 14px; }
       .site-title { font-size: 2.2rem; }
       .star-of-david { font-size: 2rem; }
@@ -536,6 +537,31 @@
     }
     .filter-empty.show { display: block; }
     .saying-card.hidden { display: none; }
+    .section-divider.hidden { display: none; }
+
+    /* ── Home / travel toggle ── */
+    .mode-toggle {
+      display: flex; max-width: 480px; margin: 0 auto 10px;
+      border: 2px solid var(--gold); border-radius: 40px; overflow: hidden;
+      background: rgba(0,0,0,0.25); box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+    }
+    .mode-btn {
+      flex: 1; padding: 11px 10px; border: none; background: transparent; cursor: pointer;
+      font-family: 'Frank Ruhl Libre', serif; font-size: 1.05rem; font-weight: 900;
+      color: var(--parchment-dark); letter-spacing: 0.04em; transition: all 0.2s; white-space: nowrap;
+    }
+    .mode-btn + .mode-btn { border-inline-start: 1px solid rgba(184,134,11,0.45); }
+    .mode-btn:hover { background: rgba(184,134,11,0.18); color: var(--gold-shine); }
+    .mode-btn.active {
+      background: linear-gradient(180deg, var(--gold-shine) 0%, var(--gold) 60%, #8b6500 100%);
+      color: var(--brown-dark);
+    }
+    .mode-count { font-size: 0.72em; opacity: 0.7; font-weight: 700; }
+    .mode-hint {
+      text-align: center; font-family: 'Heebo', sans-serif; font-size: 0.8rem;
+      color: var(--parchment-dark); opacity: 0.8; font-style: italic; margin-bottom: 16px;
+    }
+    .filter-chip.is-empty { opacity: 0.35; }
 
     /* ── CARD SHARE ── */
     .card-seal { justify-content: space-between !important; }
@@ -616,23 +642,30 @@
   </div>
 
   <div class="filter-bar">
+    <div class="mode-toggle" role="group" aria-label="בבית או בדרך">
+      <button class="mode-btn active" type="button" data-mode="all" aria-pressed="true">✦ הכל <span class="mode-count">(74)</span></button>
+      <button class="mode-btn" type="button" data-mode="home" aria-pressed="false">🏠 בבית <span class="mode-count">(53)</span></button>
+      <button class="mode-btn" type="button" data-mode="travel" aria-pressed="false">✈ בדרך <span class="mode-count">(21)</span></button>
+    </div>
+    <div class="mode-hint" id="modeHint">כל הפסקים — מהסלון ועד הטרמינל</div>
     <div class="filter-title">🔎 &nbsp; סנן לפי חג</div>
     <div class="filter-chips">
-      <button class="filter-chip active" data-filter="all">הכל <span class="chip-count">(41)</span></button>
-      <button class="filter-chip" data-filter="tisha">🕍 תשעה באב</button>
-      <button class="filter-chip" data-filter="kippur">🕊 יום כיפור</button>
-      <button class="filter-chip" data-filter="pesach">🍞 פסח</button>
-      <button class="filter-chip" data-filter="shabbat">🕯 שבת</button>
-      <button class="filter-chip" data-filter="sukkot">🌴 סוכות</button>
-      <button class="filter-chip" data-filter="rosh">🍎 ראש השנה</button>
-      <button class="filter-chip" data-filter="chanuka">🕎 חנוכה</button>
-      <button class="filter-chip" data-filter="purim">🎭 פורים</button>
-      <button class="filter-chip" data-filter="shavuot">🧀 שבועות</button>
-      <button class="filter-chip" data-filter="tubishvat">🌳 ט״ו בשבט</button>
-      <button class="filter-chip" data-filter="lagbaomer">🔥 ל״ג בעומר</button>
-      <button class="filter-chip" data-filter="home">🏠 בבית</button>
+      <button class="filter-chip active" data-filter="all">הכל <span class="chip-count">(74)</span></button>
+      <button class="filter-chip" data-filter="tisha">🕍 תשעה באב <span class="chip-count">(4)</span></button>
+      <button class="filter-chip" data-filter="kippur">🕊 יום כיפור <span class="chip-count">(8)</span></button>
+      <button class="filter-chip" data-filter="pesach">🍞 פסח <span class="chip-count">(8)</span></button>
+      <button class="filter-chip" data-filter="shabbat">🕯 שבת <span class="chip-count">(8)</span></button>
+      <button class="filter-chip" data-filter="sukkot">🌴 סוכות <span class="chip-count">(7)</span></button>
+      <button class="filter-chip" data-filter="simchat">🎉 שמחת תורה <span class="chip-count">(3)</span></button>
+      <button class="filter-chip" data-filter="rosh">🍎 ראש השנה <span class="chip-count">(7)</span></button>
+      <button class="filter-chip" data-filter="chanuka">🕎 חנוכה <span class="chip-count">(7)</span></button>
+      <button class="filter-chip" data-filter="purim">🎭 פורים <span class="chip-count">(7)</span></button>
+      <button class="filter-chip" data-filter="shavuot">🧀 שבועות <span class="chip-count">(4)</span></button>
+      <button class="filter-chip" data-filter="tubishvat">🌳 ט״ו בשבט <span class="chip-count">(4)</span></button>
+      <button class="filter-chip" data-filter="lagbaomer">🔥 ל״ג בעומר <span class="chip-count">(4)</span></button>
+      <button class="filter-chip" data-filter="atzmaut">🎆 יום העצמאות <span class="chip-count">(3)</span></button>
     </div>
-    <div class="filter-empty" id="filterEmpty">לא נמצאו פנינים בחג זה. הרב עזרא מתנצל ומבטיח להשלים עד החג הבא.</div>
+    <div class="filter-empty" id="filterEmpty">לא נמצאו פסקים בשילוב הזה. הרב עזרא מתנצל ומבטיח להשלים עד החג הבא.</div>
   </div>
 
   <div class="section-divider"><span>🕍</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">תשעה באב</span><span>🕍</span></div>
@@ -801,6 +834,60 @@
     </div>
   </div>
 
+  <div class="saying-card" data-topics="kippur home">
+    <div class="card-number">יום כיפור · ו׳</div>
+    <div class="saying-source">שו״ת ״אשמורת הבוקר״, סימן ה׳</div>
+    <div class="saying-text">
+      ״הַקָּם לִסְלִיחוֹת בְּאַשְׁמֹרֶת הַבֹּקֶר — שְׂכָרוֹ גָּדוֹל. וְהַקָּם, וְשׁוֹתֶה קָפֶה, וְחוֹזֵר לַמִּטָּה ׳לְחָמֵשׁ דַּקּוֹת׳ — שְׂכָרוֹ שָׁמוּר לוֹ לַשָּׁנָה הַבָּאָה.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בשנה הראשונה שלי בישיבה קמתי לסליחות כל לילה. בשנה השנייה — כל לילה שני. היום אני קם לסליחות רק בערב יום כיפור, ומתפלל בכוונה כפולה כדי לכסות על כל החודש. הרבנית אומרת שזה לא עובד ככה. ייתכן שהיא צודקת, ולכן אני מבקש סליחה גם על זה.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="kippur home">
+    <div class="card-number">יום כיפור · ז׳</div>
+    <div class="saying-source">מטה אפרים, הלכות סעודה מפסקת — מהדורת ״עוד מנה אחת״</div>
+    <div class="saying-text">
+      ״סְעוּדָה הַמַּפְסֶקֶת — אוֹכְלִים בָּהּ כְּדֵי שֶׁיִּהְיֶה כֹּחַ לַצּוֹם, וְלֹא יוֹתֵר מִדַּי, כְּדֵי שֶׁיִּהְיֶה כֹּחַ לָלֶכֶת לְבֵית הַכְּנֶסֶת. וְהָאוֹכֵל עַד שֶׁאֵינוֹ יָכוֹל לָזוּז — יִתְוַדֶּה גַּם עַל זֶה.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בכל ערב כיפור אני מבטיח לעצמי: הפעם במתינות. ובכל שנה, בדיוק כשהרבנית מגישה את העוף, אני נזכר שמחר צום ומוסיף מנה ״על חשבון מחר״. בשנה שעברה הגעתי לכל נדרי בנשימה כבדה, והגבאי שאל אם הכל בסדר. עניתי: ״אני מוכן.״
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="kippur home">
+    <div class="card-number">יום כיפור · ח׳</div>
+    <div class="saying-source">ספר ״נעלי בד״, שער הלבוש, פרק א׳</div>
+    <div class="saying-text">
+      ״בְּיוֹם הַכִּפּוּרִים אָסוּר בִּנְעִילַת הַסַּנְדָּל שֶׁל עוֹר. לְפִיכָךְ יוֹצְאִים לְבֵית הַכְּנֶסֶת בַּחֲלִיפָה לְבָנָה וּבְנַעֲלֵי גּוּמִי צִבְעוֹנִיּוֹת — וְאֵין בָּזֶה שׁוּם דָּבָר מְשֻׁנֶּה, שֶׁכָּל יִשְׂרָאֵל עוֹשִׂים כֵּן.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור הרב עזרא:</strong> יום אחד בשנה כל עם ישראל יוצא לרחוב בחליפה ובקרוקס, ואף אחד לא מעיר. זה הלבוש האחיד היחיד שהצלחנו אי פעם להסכים עליו. אם נצליח להסכים ככה גם על דברים אחרים — תבוא הגאולה.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section-divider"><span>🍞</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">פסח</span><span>🍞</span></div>
 
   <div class="saying-card" data-topics="pesach">
@@ -883,6 +970,60 @@
     </div>
     <div class="saying-commentary">
       <strong>למעשה:</strong> בכל שנה הנכדים שלי מנצחים אותי במשא ומתן. בשנה שעברה סגרתי על אופניים חשמליים, רק כדי שנספיק לאכול אפיקומן לפני חצות. לכן ההלכה למעשה פשוטה: תשלם מה שצריך. זמן האפיקומן יקר יותר מכל מחיר, והנכד יודע את זה.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="pesach home">
+    <div class="card-number">פסח · ו׳</div>
+    <div class="saying-source">שו״ת ״קטניות של שלום״, סימן ג׳</div>
+    <div class="saying-text">
+      ״הָאַשְׁכְּנַזִּי שֶׁנָּשָׂא סְפָרַדִּיָּה — אוֹכֵל קִטְנִיּוֹת בְּבֵית חוֹתְנָיו, וּמַחְמִיר בְּבֵית הוֹרָיו. וְאִם שְׁנֵי הַסְּדָרִים בְּאוֹתוֹ עֶרֶב — יֹאכַל אֹרֶז בַּשֵּׁנִי, וְיִשְׁתֹּק.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור הרב עזרא:</strong> זו הסוגיה ששוברת יותר משפחות מכל שאלה אחרת בפסח. אני פוסק לפי מקום הישיבה: איפה שאתה יושב — משם אתה אוכל. ובשנה שבה החמות מבשלת מג׳דרה — אתה ספרדי. לפחות לערב אחד.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="pesach home">
+    <div class="card-number">פסח · ז׳</div>
+    <div class="saying-source">הגדה של פסח, ״מה נשתנה״ — עם הערות הרב עזרא בשוליים</div>
+    <div class="saying-text">
+      ״הַקָּטָן שֶׁבַּמִּשְׁפָּחָה שׁוֹאֵל ׳מַה נִּשְׁתַּנָּה׳. וְאִם הַקָּטָן בֶּן שְׁלוֹשִׁים וּשְׁתַּיִם וְעוֹד לֹא נוֹלְדוּ נְכָדִים — שׁוֹאֵל, וְכָל הַשֻּׁלְחָן מִסְתַּכֵּל עַל אֲחוֹתוֹ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> אני שאלתי ״מה נשתנה״ עד גיל שלושים ושתיים, כי הייתי הצעיר במשפחה ולא היו נכדים. כל שנה, אחרי הקושיה הרביעית, אמא שלי הייתה אומרת: ״ויש לי עוד שאלה אחת...״ ולא מסיימת. כולם הבינו. בסוף התחתנתי, בעיקר כדי לפנות את התפקיד.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="pesach home">
+    <div class="card-number">פסח · ח׳</div>
+    <div class="saying-source">שו״ת ״מצה אחרונה״, סימן כ״ה</div>
+    <div class="saying-text">
+      ״מַצָּה שֶׁנִּשְׁאֲרָה אַחַר הַפֶּסַח — מֻתֶּרֶת בַּאֲכִילָה עַד שָׁבוּעוֹת. וּמִשָּׁם וָאֵילָךְ — אֵינָהּ מַאֲכָל, אֶלָּא חֹמֶר בִּנְיָן.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> כל שנה קונים חמש חבילות מצה ״ליתר ביטחון״ וגומרים אחת וחצי. בשנה שעברה ניסיתי לסכך את הסוכה במצות שנשארו. הרבנית אמרה שזה פסול, כי סכך צריך לגדול מן הקרקע ולא להיות אוכל. היא צדקה. אבל זה החזיק יפה עד הגשם הראשון, ואז כל הסוכה הפכה למצה בריי ענקית.
     </div>
     <div class="card-seal">
       <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
@@ -985,6 +1126,60 @@
     </div>
   </div>
 
+  <div class="saying-card" data-topics="shabbat home">
+    <div class="card-number">שבת בבית · ג׳</div>
+    <div class="saying-source">שו״ת ״שבת שלום, עזרא!״, סימן א׳</div>
+    <div class="saying-text">
+      ״הָרַבָּנִית מַדְלִיקָה נֵרוֹת וּבַעְלָהּ עוֹד בַּמִּקְלַחַת — הֲרֵי הוּא ׳נִכְנָס לַשַּׁבָּת בִּרְטִיבוּת׳, וְאֵין בְּכָךְ כְּלוּם, וּבִלְבַד שֶׁיֵּצֵא לִפְנֵי הַקִּדּוּשׁ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> ארבעים שנה אני נכנס למקלחת שלוש דקות לפני הדלקת נרות. ארבעים שנה הרבנית צועקת ״עזרא, שבת!״. זה כבר חלק מהטקס, כמו ״לכה דודי״. אם יום אחד אצא בזמן — היא תחשוב שמשהו קרה, ותתקשר לילדים.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="shabbat home">
+    <div class="card-number">שבת בבית · ד׳</div>
+    <div class="saying-source">ספר ״לאכול ולחיות״, חלק ו׳, פרק ״עונג שבת״</div>
+    <div class="saying-text">
+      ״הָאוֹרֵחַ הַמְּסַפֵּר בִּסְעוּדַת שַׁבָּת עַל הַדִּיאֶטָה שֶׁלּוֹ — אֵין מְשִׁיבִין לוֹ, אֶלָּא מַגִּישִׁין לוֹ עוֹד קִיגְל. שֶׁאֵין דִּיאֶטָה בְּשַׁבָּת.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור הרב עזרא:</strong> יש כלל שאני מלמד כבר שלושים שנה: קלוריות של שבת אינן נספרות. הן נרשמות בחשבון נפרד, של עולם הבא. אין לי מקור לזה, אבל גם אין לי משקל שמוכיח אחרת — כי בשבת אני לא עולה עליו.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="shabbat home">
+    <div class="card-number">שבת בבית · ה׳</div>
+    <div class="saying-source">שו״ת ״שלושה כוכבים ואנטנה״, סימן ג׳</div>
+    <div class="saying-text">
+      ״הַמְחַכֶּה בְּמוֹצָאֵי שַׁבָּת לִשְׁלֹשָׁה כּוֹכָבִים, וְרוֹאֶה רַק שְׁנַיִם וּמָטוֹס — אֵינוֹ סוֹפֵר אֶת הַמָּטוֹס. וְהַמַּדְלִיק אֶת הַטֵּלֵפוֹן לִפְנֵי שֶׁסִּיְּמוּ הַבְדָּלָה — עָלָיו נֶאֱמַר ׳מִהֵר מִדַּי׳.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בכל מוצאי שבת כל המשפחה עומדת בחלון ומחפשת שלושה כוכבים. בעיר שלנו, בגלל תאורת הרחוב, רואים בדרך כלל שניים ואנטנה מהבהבת. הנכדים ניסו לשכנע אותי שהאנטנה נחשבת. לא קיבלתי. הם מחכים איתי עד הכוכב השלישי, עם הטלפונים ביד, כמו רצים לפני זינוק.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section-divider"><span>🌴</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">סוכות</span><span>🌴</span></div>
 
   <div class="saying-card" data-topics="sukkot">
@@ -1049,6 +1244,116 @@
     </div>
     <div class="saying-commentary">
       <strong>ביאור הרב עזרא:</strong> מעולם לא נכנסתי הביתה בגלל גשם — גשם זה ברכה. אבל צרעה זו לא ברכה. צרעה זו צרעה. לכן בשנים האחרונות אני מניח צלחת ריבה בקצה החצר, ״מנה לצרעות״, ואוכל בסוכה בשלום. הצרעות מרוצות, ואני גם.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="sukkot home">
+    <div class="card-number">סוכות · ה׳</div>
+    <div class="saying-source">שו״ת ״ישנתי ולבי ער״, סימן ט׳</div>
+    <div class="saying-text">
+      ״הַיָּשֵׁן בַּסֻּכָּה וְהֵעִירוֹ חָתוּל — מִצְטַעֵר הוּא, וּפָטוּר מִשְּׁאָר הַלַּיְלָה. וְהֵעִירוֹ חָתוּל שֵׁנִי — יִכָּנֵס הַבַּיְתָה, וְיַשְׁאִיר אֶת הַסֻּכָּה לַחֲתוּלִים.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> ניסיתי לישון בסוכה שלושה לילות ברצף. בלילה הראשון — חתול. בלילה השני — חתול אחר, עם חברים. בלילה השלישי הבנתי שהסוכה שלי היא בית הארחה לחתולי השכונה, ואני האורח. מאז אני ישן בבית, והחתולים מקיימים את המצווה בשבילי.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="sukkot home">
+    <div class="card-number">סוכות · ו׳</div>
+    <div class="saying-source">ספר ״נוי סוכה״, שער הקישוטים, פרק ג׳</div>
+    <div class="saying-text">
+      ״קִשּׁוּטֵי הַסֻּכָּה שֶׁהֵכִינוּ הַנְּכָדִים בַּגַּן — אֲסוּרִים בַּהֲנָאָה כָּל שִׁבְעַת הַיָּמִים, וַאֲסוּרִים בִּזְרִיקָה לְעוֹלָם.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור הרב עזרא:</strong> יש לי במחסן שלושה ארגזים של שרשראות נייר, פירות מקרטון, וציור של משה רבנו שנראה כמו תפוח אדמה עם זקן. כל שנה תולים הכל מחדש. הסוכה שלי כבר לא מקושטת — היא ארכיון.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="sukkot home">
+    <div class="card-number">סוכות · ז׳</div>
+    <div class="saying-source">שו״ת ״הדר ותפארת״, סימן י״ז — נכתב בשוק ארבעת המינים</div>
+    <div class="saying-text">
+      ״הַקּוֹנֶה אֶתְרוֹג בְּמֵאָה וַחֲמִשִּׁים שֶׁקֶל — מְהַדֵּר. וְהַקּוֹנֶה בְּמֵאָה וַחֲמִשִּׁים, וְאַחַר כָּךְ רוֹאֶה אֶתְרוֹג יָפֶה יוֹתֵר בְּשִׁשִּׁים אֵצֶל הַשָּׁכֵן — אָסוּר לוֹ לִשְׁאוֹל אֵיפֹה קָנָה.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> כל שנה אני עומד בשוק ארבעת המינים שעה וחצי עם זכוכית מגדלת, מסובב אתרוג אחרי אתרוג. וכל שנה אני קונה את הראשון שהחזקתי. המוכר כבר מכיר אותי: הוא מגיש לי אותו ישר, ונותן לי את הזכוכית המגדלת רק בשביל הטקס.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>🎉</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">שמחת תורה</span><span>🎉</span></div>
+
+  <div class="saying-card" data-topics="simchat home">
+    <div class="card-number">שמחת תורה · א׳</div>
+    <div class="saying-source">שו״ת ״סובב סובב״, סימן ז׳</div>
+    <div class="saying-text">
+      ״הָרוֹקֵד שֶׁבַע הַקָּפוֹת — יָצָא. הָרוֹקֵד עַד שֶׁהַגַּבַּאי מְכַבֶּה אֶת הָאוֹר — מְהַדֵּר. וְהַמַּחֲזִיק סֵפֶר תּוֹרָה וְאֵינוֹ מוֹסֵר אוֹתוֹ לַאֲחֵרִים — יֵשׁ לוֹ שִׂמְחָה גְּדוֹלָה, וּלְמָחֳרָת גַּם כְּאֵב גַּב גָּדוֹל.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> כל שמחת תורה אני מבטיח לעצמי ״רק הקפה אחת״. וכל שמחת תורה אני מוצא את עצמי בהקפה השביעית, עם ספר תורה ביד ובחור ישיבה על הכתפיים. למחרת אני לא יכול להרים את הראש. אבל הלב — הלב במקום.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="simchat home">
+    <div class="card-number">שמחת תורה · ב׳</div>
+    <div class="saying-source">ספר ״מתוק מדבש״, הלכות סוכריות, סימן א׳</div>
+    <div class="saying-text">
+      ״הַמְחַלֵּק סֻכָּרִיּוֹת לַיְּלָדִים בְּשִׂמְחַת תּוֹרָה — מְמַתֵּק לָהֶם אֶת הַתּוֹרָה. וְהַמְחַלֵּק סֻכָּרִיּוֹת חֲמוּצוֹת — מְלַמֵּד אוֹתָם שֶׁגַּם זֶה חֵלֶק מִן הַחַיִּים.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> אני האיש של הסוכריות בבית הכנסת שלנו כבר עשרים שנה. יש לי כיסים מיוחדים במעיל, וילדים שגדלו על הסוכריות שלי מביאים היום את הילדים שלהם. זה הדבר היחיד בחיים שלי שאף אחד מעולם לא שאל אם הוא כשר.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="simchat home">
+    <div class="card-number">שמחת תורה · ג׳</div>
+    <div class="saying-source">שו״ת ״אחרי החגים״, סימן אחרון</div>
+    <div class="saying-text">
+      ״הָאוֹמֵר ׳נְדַבֵּר אַחֲרֵי הַחַגִּים׳ — הֲרֵי זֶה כְּאוֹמֵר ׳לְעוֹלָם לֹא׳, וְכָךְ מְקַבְּלִים אֶת דְּבָרָיו. וְהַמַּבְטִיחַ דִּיאֶטָה ׳אַחֲרֵי הַחַגִּים׳ — פָּטוּר עַד חֲנֻכָּה, וּמֵחֲנֻכָּה — עַד פּוּרִים.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור הרב עזרא:</strong> ״אחרי החגים״ הוא התאריך היחיד בלוח העברי שלא מופיע באף לוח שנה. כל התיקונים בבית, כל הדיאטות, כל הפגישות — הכל ״אחרי החגים״. ואז מגיעה חנוכה, וזה כבר ״אחרי חנוכה״. ומשם — אתם כבר יודעים.
     </div>
     <div class="card-seal">
       <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
@@ -1133,6 +1438,60 @@
     </div>
   </div>
 
+  <div class="saying-card" data-topics="rosh home">
+    <div class="card-number">ראש השנה · ה׳</div>
+    <div class="saying-source">שו״ת ״קול שופר״, סימן י״ב — עם מכתב מצורף מהשכנים</div>
+    <div class="saying-text">
+      ״הַתּוֹקֵעַ שֶׁנִּשְׁמַע כְּמוֹ פִּיל מֻצְנָן — יָצָא. שֶׁנִּשְׁמַע כְּמוֹ בַּרְוָז — יָצָא בְּדִיעֲבַד. וְהַמִּתְאַמֵּן עַל הַשּׁוֹפָר בַּבַּיִת בְּחֹדֶשׁ אֱלוּל, בְּשֵׁשׁ בַּבֹּקֶר — לֹא יָצָא יְדֵי חוֹבָתוֹ כְּלַפֵּי הַשְּׁכֵנִים.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> הבן שלי למד לתקוע בשופר בחודש אלול. כל בוקר, בשש. אחרי שבוע השכנים הביאו מכתב חתום. אחרי שבועיים — עוגה, ומכתב שני. בראש השנה הוא תקע בבית הכנסת בצורה מושלמת, וכל הבניין בכה. לא ברור אם מהתרגשות או מהקלה.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="rosh home">
+    <div class="card-number">ראש השנה · ו׳</div>
+    <div class="saying-source">ספר ״ותשליך במצולות״, פרק ב׳</div>
+    <div class="saying-text">
+      ״הַהוֹלֵךְ לְתַשְׁלִיךְ וּמְנַעֵר אֶת כִּיסָיו לְיַד הַמַּיִם — מַשְׁלִיךְ אֶת חֲטָאָיו. וְהַמַּשְׁלִיךְ חַלָּה שְׁלֵמָה — כַּנִּרְאֶה חָטָא הַרְבֵּה, וְאֵין שׁוֹאֲלִים אוֹתוֹ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בתשליך האחרון עמדתי ליד שכן שזרק לאגם שלוש חלות, באגט, וחצי עוגת דבש. לא שאלתי. הברווזים לא שאלו. כולנו פשוט הנהנו בשקט, ואיחלנו לו שנה טובה במיוחד.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="rosh home">
+    <div class="card-number">ראש השנה · ז׳</div>
+    <div class="saying-source">שו״ת ״גם לך 🙏״, סימן ת״ש</div>
+    <div class="saying-text">
+      ״הַמְקַבֵּל בְּעֶרֶב רֹאשׁ הַשָּׁנָה אַרְבָּעִים בְּרָכוֹת בְּוַוטְסְאַפּ, עִם רִמּוֹן מְנַצְנֵץ — פָּטוּר מִלַּעֲנוֹת לְכֻלָּן, וְדַי לוֹ בְּ׳גַּם לְךָ׳ אֶחָד לְכָל קְבוּצָה.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בשנה שעברה קיבלתי מאתיים ושלוש ברכות. מאה ושמונים מהן היו אותה תמונה של רימון עם נצנצים. אחת מהן שלחתי אני — והיא חזרה אליי מארבעה אנשים שונים. זו כבר לא ברכה. זה מחזור המים בטבע.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section-divider"><span>🕎</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">חנוכה</span><span>🕎</span></div>
 
   <div class="saying-card" data-topics="chanuka">
@@ -1197,6 +1556,60 @@
     </div>
     <div class="saying-commentary">
       <strong>הרב עזרא מספר:</strong> פעם ניצחתי את הנכד שלי בסביבון — שלוש פעמים ״ג״ ברצף. הוא בכה חצי שעה, ואמא שלו לא דיברה איתי עד פורים. מאז אני מפסיד בכוונה, וזה הנס האמיתי של חנוכה: סבא שמפסיד בשמחה.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="chanuka home">
+    <div class="card-number">חנוכה · ה׳</div>
+    <div class="saying-source">שו״ת ״לביבה או סופגנייה״, סימן ל״ו</div>
+    <div class="saying-text">
+      ״הַלְּבִיבוֹת וְהַסֻּפְגָּנִיּוֹת — שְׁתֵּיהֶן מִצְוָה, וְאֵין מַעֲבִירִין עַל הַמִּצְווֹת. לְפִיכָךְ הַשּׁוֹאֵל ׳מָה עָדִיף?׳ — מַגִּישִׁין לוֹ שְׁתֵּיהֶן, וְהַשְּׁאֵלָה נִפְתֶּרֶת מֵאֵלֶיהָ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בבית שלנו יש שני מחנות: מחנה הלביבות של הרבנית, ומחנה הסופגניות של הבת שלי. אני הדיין. כבר שלושים שנה אני בודק את הראיות של שני הצדדים, לעומק, כל ערב, ועדיין לא הכרעתי. תיק מסובך.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="chanuka home">
+    <div class="card-number">חנוכה · ו׳</div>
+    <div class="saying-source">ספר ״פרסומי ניסא״, שער החלון, סימן ח׳</div>
+    <div class="saying-text">
+      ״הַמַּדְלִיק חֲנֻכִּיָּה בַּחַלּוֹן — מְפַרְסֵם אֶת הַנֵּס. וְהַמַּדְלִיק שְׁמוֹנֶה חֲנֻכִּיּוֹת שֶׁל כָּל בְּנֵי הַבַּיִת עַל אוֹתוֹ אֶדֶן — מְפַרְסֵם אֶת הַנֵּס, וְגַם אֶת מִסְפַּר הַטֵּלֵפוֹן שֶׁל מְכַבֵּי הָאֵשׁ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> יש לנו אדן חלון אחד ושמונה חנוכיות. בנר השמיני זה נראה כמו נחיתה של חללית. בשנה שעברה השכנה מהבניין ממול התקשרה לשאול אם הכל בסדר. אמרתי לה: ״הכל בסדר, זה פרסומי ניסא.״ היא ענתה: ״תפרסמו קצת פחות.״
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="chanuka home">
+    <div class="card-number">חנוכה · ז׳</div>
+    <div class="saying-source">שו״ת ״דמי חנוכה״, סימן כ״ד</div>
+    <div class="saying-text">
+      ״דְּמֵי חֲנֻכָּה שֶׁנִּתְּנוּ לַנְּכָדִים — שֶׁלָּהֶם הֵם. וְהַנֶּכֶד שֶׁהוֹצִיא אֶת כָּל דְּמֵי הַחֲנֻכָּה עַל סֻפְגָּנִיּוֹת — לָמַד תּוֹרָה מִסַּבָּא, וְאֵין לִגְעֹר בּוֹ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> פעם נתתי דמי חנוכה במטבעות שוקולד, כמו פעם. הנכד בן השש הסתכל עליי ושאל אם אפשר להעביר בביט. מאז אני מעביר בביט, ומצרף סטיקר של סביבון. המסורת נשמרת — רק בצורה אחרת.
     </div>
     <div class="card-seal">
       <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
@@ -1281,6 +1694,60 @@
     </div>
   </div>
 
+  <div class="saying-card" data-topics="purim home">
+    <div class="card-number">פורים · ה׳</div>
+    <div class="saying-source">מסכת מגילה, ״הלכות רעשן״ — מהדורת 110 דציבל</div>
+    <div class="saying-text">
+      ״הַמַּרְעִישׁ בְּשֵׁם הָמָן — מְקַיֵּם מִנְהַג. וְהַמַּרְעִישׁ בְּכָל פַּעַם שֶׁנִּזְכָּר ׳הַמֶּלֶךְ׳, מִפְּנֵי שֶׁלֹּא שָׁמַע טוֹב — יַעֲבֹר לַשּׁוּרָה הָרִאשׁוֹנָה.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בכל שנה יש ילד אחד בבית הכנסת עם רעשן חשמלי. בכל שנה אני מבקש מההורים שלו לשקול רעשן פשוט יותר. ובכל שנה, בשנה הבאה, הוא מגיע עם רעשן חזק יותר. הוא יהיה מהנדס גדול. או חזן.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="purim home">
+    <div class="card-number">פורים · ו׳</div>
+    <div class="saying-source">שו״ת ״אוזן קשבת״, סימן ט״ו</div>
+    <div class="saying-text">
+      ״אָזְנֵי הָמָן — כָּל מִלּוּי כָּשֵׁר: פֶּרֶג, תְּמָרִים, שׁוֹקוֹלָד. הַמְמַלֵּא בְּרִבַּת חָלָב — מְהַדֵּר. וְהַמְמַלֵּא בְּחוּמוּס — פּוֹתֵחַ מַחְלֹקֶת שֶׁלֹּא תִּסָּגֵר עַד בִּיאַת הַמָּשִׁיחַ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור הרב עזרא:</strong> יש ויכוח עתיק בין אוהבי הפרג לאוהבי השוקולד. אני פסקתי כבר לפני עשרים שנה: אוזן המן טובה היא אוזן המן שנמצאת לפניך. הפרג — לגדולים, השוקולד — לקטנים, ומה שנשאר במגש — לרב.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="purim home">
+    <div class="card-number">פורים · ז׳</div>
+    <div class="saying-source">ספר ״ונהפוך הוא״, שער התחפושות</div>
+    <div class="saying-text">
+      ״הַמִּתְחַפֵּשׂ בְּכָל שָׁנָה לְאוֹתָהּ הַתַּחְפֹּשֶׂת — אֵין זוֹ תַּחְפֹּשֶׂת, אֶלָּא מַדִּים.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> ארבעים שנה אני מתחפש לרב. כולם אומרים שזה לא נחשב, כי אני רב. אני עונה שבפורים אני מתחפש לרב שאוסר דברים. זו התחפושת הכי קשה שיש, ואף פעם לא הצלחתי להחזיק בה יותר מעשר דקות.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section-divider"><span>🧀</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">שבועות</span><span>🧀</span></div>
 
   <div class="saying-card" data-topics="shavuot home">
@@ -1309,6 +1776,42 @@
     </div>
     <div class="saying-commentary">
       <strong>ביאור הרב עזרא:</strong> בכל שנה אני מחזיק מעמד עד שלוש וחצי. ואז, באמצע הלימוד, מגיעה ״מנוחה מן השמיים״. אני מתעורר בשש עם דף שלם מודפס על הלחי. הרבנית אומרת שהיא קוראת את החידושים שלי ישר מהפנים.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="shavuot home">
+    <div class="card-number">שבועות · ג׳</div>
+    <div class="saying-source">שו״ת ״חלבי ואחר כך בשרי״, סימן ב׳</div>
+    <div class="saying-text">
+      ״הָאוֹכֵל בְּשָׁבוּעוֹת סְעוּדָה חֲלָבִית וְאַחֲרֶיהָ בְּשָׂרִית — מַמְתִּין בֵּינֵיהֶן. וְהַמַּמְתִּין, וְאוֹכֵל בֵּינְתַיִם עוֹד פְּרוּסַת עוּגַת גְּבִינָה — מַתְחִיל לְהַמְתִּין מֵחָדָשׁ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בשבועות שעבר התחלתי להמתין בין החלבי לבשרי ארבע פעמים, כי בכל פעם הרבנית הביאה עוד פרוסה ״רק לטעום״. בסוף אכלנו את הבשרי בשבע בערב. הנכדים אמרו שזה היה החג הארוך בהיסטוריה.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="shavuot home">
+    <div class="card-number">שבועות · ד׳</div>
+    <div class="saying-source">ספר ״סל ביכורים״, פרק א׳ — מהדורת גן חובה</div>
+    <div class="saying-text">
+      ״הַיְּלָדִים הַחוֹזְרִים מִן הַגַּן עִם זֵר פְּרָחִים עַל הָרֹאשׁ וְסַל בִּכּוּרִים בַּיָּד — הַזֵּר שֶׁלָּהֶם, הַסַּל שֶׁלָּהֶם, וְהַבִּכּוּרִים — לְקִשּׁוּט בִּלְבַד, וְאֵין לַסַּבָּא לֶאֱכֹל מֵהֶם.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בכל שבועות הנכדה שלי חוזרת מהגן עם סל קש, שני ענבים ותאנה אחת, ומגישה לי אותם בטקס, כמו בבית המקדש. אני מקבל בהתרגשות, מברך, ואוכל את התאנה. היא בוכה, כי זה היה לקישוט. כל שנה. ולכן ההלכה כתובה כמו שהיא כתובה.
     </div>
     <div class="card-seal">
       <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
@@ -1357,6 +1860,42 @@
     </div>
   </div>
 
+  <div class="saying-card" data-topics="tubishvat home">
+    <div class="card-number">ט״ו בשבט · ג׳</div>
+    <div class="saying-source">סדר ט״ו בשבט, נוסח ״חסר אחד״</div>
+    <div class="saying-text">
+      ״סֵדֶר ט״וּ בִּשְׁבָט — חֲמִשָּׁה עָשָׂר מִינֵי פֵּרוֹת כְּנֶגֶד הַתַּאֲרִיךְ. וְהַמּוֹצֵא רַק אַרְבָּעָה עָשָׂר — מְצָרֵף אֶת הַקֶּטְשׁוֹפּ, שֶׁהוּא מִן הָעַגְבָנִיָּה, וְהָעַגְבָנִיָּה — פְּרִי.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בכל שנה אני סופר את הפירות על השולחן, ובכל שנה חסר אחד. בשנה שעברה עשיתי סדר עם ארבעה עשר פירות וצנצנת ריבת תות. הנכד שלי אמר שזו רמאות. הסברתי לו שזה ״פרי בגלגול״. הוא לא השתכנע, אבל אכל את הריבה.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="tubishvat home">
+    <div class="card-number">ט״ו בשבט · ד׳</div>
+    <div class="saying-source">שו״ת ״חרוב במערה״, סימן י״ג</div>
+    <div class="saying-text">
+      ״הֶחָרוּב — פְּרִי שֶׁאֵין אוֹכְלִים אוֹתוֹ כָּל הַשָּׁנָה, וְאוֹכְלִים אוֹתוֹ בְּט״וּ בִּשְׁבָט, וּמִתְחָרְטִים עַד ט״וּ בִּשְׁבָט הַבָּא.״
+    </div>
+    <div class="saying-commentary">
+      <strong>ביאור הרב עזרא:</strong> רבי שמעון בר יוחאי אכל חרובים שלוש עשרה שנה במערה. אני אוכל אחד בשנה, וזה מספיק לי כדי להבין למה הוא לא יצא החוצה קודם: הוא פשוט חיכה שמישהו יביא משהו אחר לאכול.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section-divider"><span>🔥</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">ל״ג בעומר</span><span>🔥</span></div>
 
   <div class="saying-card" data-topics="lagbaomer home">
@@ -1395,6 +1934,98 @@
     </div>
   </div>
 
+  <div class="saying-card" data-topics="lagbaomer home">
+    <div class="card-number">ל״ג בעומר · ג׳</div>
+    <div class="saying-source">שו״ת ״תספורת של ל״ג״, סימן ל״ג</div>
+    <div class="saying-text">
+      ״בְּל״ג בָּעֹמֶר מֻתָּר לְהִסְתַּפֵּר. וְהַמִּסְתַּפֵּר אַחַר שְׁלוֹשִׁים וּשְׁלוֹשָׁה יָמִים — הַסַּפָּר מְבַקֵּשׁ תּוֹסֶפֶת, וְהַדִּין עִמּוֹ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בל״ג בעומר כל הגברים בשכונה מגיעים לספר באותו בוקר, עם אותה תספורת של אחרי חודש. הספר שלנו קורא לזה ״יום כיפור של הספרים״. הוא פותח בחמש בבוקר, ואני תמיד מגיע ראשון — כי אחרי הצהריים כבר אין לו כוח לדבר, ואני אוהב לדבר.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="lagbaomer home">
+    <div class="card-number">ל״ג בעומר · ד׳</div>
+    <div class="saying-source">ספר ״ריח העשן״, שער הכביסה</div>
+    <div class="saying-text">
+      ״הַחוֹזֵר מִן הַמְּדוּרָה וּבְגָדָיו מְדִיפִים רֵיחַ עָשָׁן — אֵין מַכְנִיסִים אוֹתוֹ לַבַּיִת עַד שֶׁיִּפְשֹׁט אֶת בְּגָדָיו בַּמִּרְפֶּסֶת, וְאֵין לוֹ תַּקָּנָה אֶלָּא בְּמִקְלַחַת שֶׁל חֲצִי שָׁעָה.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בכל ל״ג בעומר הרבנית עומדת בדלת עם שקית ניילון, ואנחנו נכנסים הביתה אחד-אחד, כמו בביקורת גבולות. בגדים — לשקית, ילדים — למקלחת, תפוחי אדמה חרוכים — לפח. ואני? ״עזרא, אתה ישן במרפסת.״ נו, סוכות מוקדם.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>🎆</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">יום העצמאות</span><span>🎆</span></div>
+
+  <div class="saying-card" data-topics="atzmaut home">
+    <div class="card-number">יום העצמאות · א׳</div>
+    <div class="saying-source">שו״ת ״על האש״, סימן ע״ה</div>
+    <div class="saying-text">
+      ״הַמַּנְגָּל בְּיוֹם הָעַצְמָאוּת — מִנְהָג שֶׁאֵין לוֹ שִׁעוּר. הַמַּדְלִיק אֶת הַגֶּחָלִים בְּמִנִּיפַת קַרְטוֹן — כָּשֵׁר. בְּמַיְבֵּשׁ שֵׂעָר — מְהַדֵּר. וּבְמַפּוּחַ עָלִים — הֲרֵי זֶה מֻמְחֶה, וְאֵין מִתְקָרְבִים אֵלָיו.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> יש לי שכן שמדליק את המנגל עם מפוח עלים. בפעם הראשונה שראיתי את זה חשבתי שנפלה עלינו מכה מן השמיים. היום אני מבין שזו אמנות. הקבב שלו מוכן בשלוש דקות, ומחצית מהגחלים נוחתות אצלי בחצר. זה בסדר — גם חצי מהקבב.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="atzmaut home">
+    <div class="card-number">יום העצמאות · ב׳</div>
+    <div class="saying-source">ספר ״דגל על האוטו״, פרק ד׳</div>
+    <div class="saying-text">
+      ״דֶּגֶל עַל הַמְּכוֹנִית — כָּבוֹד. שְׁנֵי דְּגָלִים — הִדּוּר. וְהַדֶּגֶל שֶׁנִּקְרַע בַּנְּסִיעָה וְנִשְׁאַר מִמֶּנּוּ רַק הַמַּקֵּל — עוֹמֵד בִּמְקוֹמוֹ עַד יוֹם הָעַצְמָאוּת הַבָּא.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> יש על האוטו שלי דגל מלפני ארבע שנים. נשאר ממנו רק המקל ופס כחול אחד. הרבנית אומרת לזרוק. אני אומר שזה סמל: המדינה עמדה בכל הרוחות — וגם המקל שלי.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="saying-card" data-topics="atzmaut home">
+    <div class="card-number">יום העצמאות · ג׳</div>
+    <div class="saying-source">שו״ת ״צידנית אינה קונה״, סימן ס״ח</div>
+    <div class="saying-text">
+      ״הַתּוֹפֵס מָקוֹם בַּפָּארְק בְּשֵׁשׁ בַּבֹּקֶר עִם שְׂמִיכָה וְכִסֵּא — זָכָה בּוֹ כַּדִּין. וְהַמַּנִּיחַ רַק צִידָנִית וְהוֹלֵךְ לִישׁוֹן — ׳צִידָנִית אֵינָהּ קוֹנָה׳, וְרַשָּׁאִים אֲחֵרִים לָשֶׁבֶת לְיָדָהּ.״
+    </div>
+    <div class="saying-commentary">
+      <strong>הרב עזרא מספר:</strong> בשנה שעברה הגענו לפארק בשמונה, וכל הדשא כבר היה תפוס: שמיכות, צידניות, ושלוש משפחות שבאו עוד בלילה עם אוהל. ישבנו על הגבעה ליד הפח. התברר שזה המקום עם הנוף הכי טוב לזיקוקים. ובעיקר לפח.
+    </div>
+    <div class="card-seal">
+      <button class="card-share" type="button">💬 שתף בוואטסאפ</button>
+      <div class="seal-inner">
+        <span>אושר על ידי הרב עזרא שליט״א</span>
+        <div class="seal-stamp">כשר<br>לחג</div>
+      </div>
+    </div>
+  </div>
+
   <div class="about-card">
     <strong>על פסקי החגים</strong> – פסקים אלו נכתבו על ידי הגאון הרב עזרא שליט״א במהלך עשרות חגים שבילה בשדות תעופה, במלונות ובטרנזיטים ברחבי העולם — וגם בבית, מול הרבנית, הנכדים והשכנה מהקומה השנייה. <strong>שימו לב:</strong> הדף מיועד לבידור בלבד. לשאלות אמיתיות בהלכות חגים, צום ותפילה — בבית ובנסיעה — פנו לרב מוסמך <em>לפני</em> שאתם מזמינים את הטיסה, ולא בשעה שלוש לפנות בוקר בטרמינל.
   </div>
@@ -1411,28 +2042,85 @@
 (function(){
   var cards = Array.prototype.slice.call(document.querySelectorAll('.saying-card'));
   var chips = Array.prototype.slice.call(document.querySelectorAll('.filter-chip'));
+  var modeBtns = Array.prototype.slice.call(document.querySelectorAll('.mode-btn'));
   var empty = document.getElementById('filterEmpty');
-  var allCount = document.querySelector('.chip-count');
-  if (allCount) allCount.textContent = '(' + cards.length + ')';
+  var hint = document.getElementById('modeHint');
+  var mode = 'all', holiday = 'all';
 
+  var HINTS = {
+    all:    'כל הפסקים — מהסלון ועד הטרמינל',
+    home:   'פסקים לחג בבית — מול הרבנית, הנכדים והשכנה מהקומה השנייה',
+    travel: 'פסקים לחג בדרך — בטיסה, במלון ובטרנזיט של שלוש לפנות בוקר'
+  };
+  var EMPTY = 'לא נמצאו פסקים בשילוב הזה. הרב עזרא מתנצל ומבטיח להשלים עד החג הבא.';
+  var EMPTY_TISHA = 'תשעה באב הוא יום של אבל, ולכן הרב עזרא לא מתבדח עליו בבית. הפסקים שלו לתשעה באב נמצאים ב״✈ בדרך״.';
+
+  // Each section heading owns the cards that follow it, up to the next heading
+  var sections = [], cur = null;
+  Array.prototype.slice.call(document.querySelectorAll('.section-divider, .saying-card')).forEach(function(el){
+    if (el.classList.contains('section-divider')) { cur = { head: el, cards: [] }; sections.push(cur); }
+    else if (cur) cur.cards.push(el);
+  });
+
+  function topics(c){ return (c.getAttribute('data-topics') || '').split(' '); }
+  function inMode(c, m){
+    if (m === 'all') return true;
+    var atHome = topics(c).indexOf('home') > -1;
+    return m === 'home' ? atHome : !atHome;
+  }
+  function inHoliday(c, h){ return h === 'all' || topics(c).indexOf(h) > -1; }
+  function countFor(m, h){ return cards.filter(function(c){ return inMode(c, m) && inHoliday(c, h); }).length; }
   function sfx(n){ if(window.MYB && window.MYB.sfx && window.MYB.sfx[n]) window.MYB.sfx[n](); }
+
+  function apply(){
+    var shown = 0;
+    cards.forEach(function(c){
+      var ok = inMode(c, mode) && inHoliday(c, holiday);
+      c.classList.toggle('hidden', !ok);
+      if (ok) shown++;
+    });
+    sections.forEach(function(sec){
+      var any = sec.cards.some(function(c){ return !c.classList.contains('hidden'); });
+      sec.head.classList.toggle('hidden', !any);
+    });
+    chips.forEach(function(ch){
+      var n = countFor(mode, ch.getAttribute('data-filter'));
+      var cnt = ch.querySelector('.chip-count');
+      if (cnt) cnt.textContent = '(' + n + ')';
+      ch.classList.toggle('is-empty', n === 0);
+    });
+    modeBtns.forEach(function(b){
+      var cnt = b.querySelector('.mode-count');
+      if (cnt) cnt.textContent = '(' + countFor(b.getAttribute('data-mode'), holiday) + ')';
+    });
+    if (empty) {
+      empty.textContent = (holiday === 'tisha' && mode === 'home') ? EMPTY_TISHA : EMPTY;
+      empty.classList.toggle('show', shown === 0);
+    }
+  }
+
+  modeBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      mode = b.getAttribute('data-mode');
+      modeBtns.forEach(function(x){
+        var on = x === b;
+        x.classList.toggle('active', on);
+        x.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      if (hint) hint.textContent = HINTS[mode];
+      apply(); sfx('pop');
+    });
+  });
 
   chips.forEach(function(chip){
     chip.addEventListener('click', function(){
-      chips.forEach(function(c){ c.classList.remove('active'); });
-      chip.classList.add('active');
-      var f = chip.getAttribute('data-filter');
-      var shown = 0;
-      cards.forEach(function(card){
-        var topics = (card.getAttribute('data-topics') || '').split(' ');
-        var match = (f === 'all') || topics.indexOf(f) > -1;
-        card.classList.toggle('hidden', !match);
-        if (match) shown++;
-      });
-      if (empty) empty.classList.toggle('show', shown === 0);
-      sfx('pop');
+      holiday = chip.getAttribute('data-filter');
+      chips.forEach(function(c){ c.classList.toggle('active', c === chip); });
+      apply(); sfx('pop');
     });
   });
+
+  apply();
 
   document.querySelectorAll('.card-share').forEach(function(btn){
     btn.addEventListener('click', function(){
@@ -1441,9 +2129,9 @@
       var num = card.querySelector('.card-number');
       var src = card.querySelector('.saying-source');
       var txt = card.querySelector('.saying-text');
-      var msg = '\u2721 ' + (num ? num.textContent.trim() : 'פנינה') + ' \u2721\n\n' +
-                (txt ? txt.textContent.trim() : '') + '\n\n\ud83d\udcd6 ' +
-                (src ? src.textContent.trim() : '') + '\n\nעוד פסקים לחגים בחו״ל:\n' + window.MYB.site;
+      var msg = '✡ ' + (num ? num.textContent.trim() : 'פסק') + ' ✡\n\n' +
+                (txt ? txt.textContent.trim() : '') + '\n\n📖 ' +
+                (src ? src.textContent.trim() : '') + '\n\nעוד פסקי חגים מהרב עזרא:\n' + window.MYB.site;
       window.MYB.share(msg);
     });
   });

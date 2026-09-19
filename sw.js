@@ -1,4 +1,4 @@
-const CACHE = "mah-yesh-beze-v9";
+const CACHE = "mah-yesh-beze-v10";
 const ASSETS = [
   "./",
   "./index.html",
