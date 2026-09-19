@@ -1,9 +1,11 @@
-const CACHE = "mah-yesh-beze-v10";
+const CACHE = "mah-yesh-beze-v11";
 const ASSETS = [
   "./",
   "./index.html",
   "./torah.html",
   "./chagim.html",
+  "./shavua.html",
+  "./week.json",
   "./giyur.html",
   "./harav.html",
   "./icon-192.png",

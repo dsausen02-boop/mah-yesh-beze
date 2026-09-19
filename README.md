@@ -34,6 +34,58 @@ cached, on your computer or at your internet provider.
 | `chagim.html` | Joke rulings for 13 holidays — at home and while travelling. A toggle at the top picks הכל / 🏠 בבית / ✈ בדרך, and the holiday chips under it narrow it further. |
 | `giyur.html` | "Can they convert?" Pick gender and country, upload a photo, get a percentage and a timeline. |
 | `harav.html` | About the rabbi: dancing animation, life story, famous rulings, books. |
+| `shavua.html` | This week's essay, plus the archive of past weeks. The text comes from `week.json`, which is rewritten every Sunday. |
+
+## The weekly essay
+
+`shavua.html` is the only page whose content changes by itself. Every Sunday
+morning a GitHub Action asks Claude for a new essay in Rav Ezra's voice and
+commits it, which republishes the site.
+
+**The moving parts**
+
+| File | What it does |
+|---|---|
+| `scripts/weekly_essay.py` | Asks Hebcal what this week holds, then asks Claude for the essay. |
+| `.github/workflows/weekly-essay.yml` | Runs the script every Sunday, 05:00 Israel time, and commits the result. |
+| `week.json` | This week's essay. The page reads this. |
+| `weeks/<date>.json` | One copy per week, kept forever. |
+| `weeks/index.json` | The archive list the page shows at the bottom. |
+
+**What the essay is about:** a holiday that week if there is one, otherwise the
+weekly Torah portion. The script asks Claude to search the web first, so the
+essay can mention what's actually going on in Israel that week — the weather,
+the markets, the traffic before a holiday.
+
+**What it stays away from:** war, politics, disasters and real people, by
+instruction in the prompt. Days of mourning — Tisha B'Av, Yom HaShoah, Yom
+HaZikaron — are never the subject: those weeks fall back to the parasha, and
+the prompt tells the model not to mention the day at all and to keep a gentler
+tone throughout.
+
+**Setup (needed once):** the Action needs an Anthropic API key. In the repo:
+Settings → Secrets and variables → Actions → New repository secret, named
+`ANTHROPIC_API_KEY`. Until that exists, the Action fails with a clear message
+and the site keeps showing the last essay.
+
+**Cost:** roughly 15–30 cents a week — one Claude Opus request plus a few web
+searches.
+
+**Running it by hand:** Actions → Weekly essay → Run workflow. It takes an
+optional date, so you can generate a particular week. Locally:
+
+```bash
+pip install anthropic tzdata && ANTHROPIC_API_KEY=... python scripts/weekly_essay.py --dry-run
+```
+
+`--dry-run` prints the essay without writing any files.
+
+**To stop it:** disable the workflow under the Actions tab, or delete
+`.github/workflows/weekly-essay.yml`. The page keeps showing whatever is in
+`week.json`.
+
+**Editing an essay by hand** is fine — `week.json` is plain text. Keep the same
+fields, and edit `weeks/<date>.json` too if you want the archive to match.
 
 ## How it is put together
 
@@ -103,6 +155,13 @@ python -m http.server 8395
 Then open http://localhost:8395.
 
 ## Change log
+
+- **2026-09-20** — New weekly page (`shavua.html`) with an essay that updates by
+  itself: a GitHub Action runs `scripts/weekly_essay.py` every Sunday, which asks
+  Hebcal what the week holds and Claude for the essay, with web search on so it can
+  mention what's happening in Israel. Added the archive (`weeks/`), the first
+  essay by hand, a nav link on every page and an app shortcut. Needs an
+  `ANTHROPIC_API_KEY` secret before the first automatic run. Service worker `v11`.
 
 - **2026-09-20** — Connected the domain `mahyeshbeze.com` (bought at Wix) to
   GitHub Pages, with HTTPS enforced. The old `dsausen02-boop.github.io/mah-yesh-beze/`
