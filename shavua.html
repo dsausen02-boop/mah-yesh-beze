@@ -528,6 +528,16 @@
       text-align: center; font-family: 'Heebo', sans-serif; color: var(--brown-mid);
       box-shadow: 0 8px 32px rgba(0,0,0,0.5); margin-bottom: 24px;
     }
+    .wk-toast {
+      position: fixed; bottom: 86px; right: 50%; transform: translate(50%, 12px);
+      background: var(--brown-dark); color: var(--parchment); border: 1px solid var(--gold);
+      font-family: 'Heebo', sans-serif; font-size: 0.84rem; line-height: 1.6;
+      padding: 12px 18px; max-width: min(420px, calc(100vw - 32px)); text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 1001;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s;
+    }
+    .wk-toast.show { opacity: 1; transform: translate(50%, 0); }
+
     .wk-archive { margin-top: 30px; }
     .wk-arch-item {
       display: flex; align-items: baseline; gap: 12px; width: 100%; text-align: right;
@@ -650,6 +660,8 @@
       </div>
     </div>
   </div>
+
+  <div class="wk-toast" id="wkToast" role="status" aria-live="polite"></div>
 
   <div class="wk-archive" id="wkArchive" style="display:none">
     <div class="section-divider"><span>✦</span><span style="font-size:1rem;font-weight:700;color:var(--parchment);letter-spacing:0.1em;">מן הארכיון</span><span>✦</span></div>
@@ -797,13 +809,97 @@
     markCurrent();
   }).catch(function () { /* no archive yet — that's fine */ });
 
+  function essayLink() {
+    return (window.MYB && window.MYB.site ? window.MYB.site : location.href.replace(/[^\/]*$/, "")) + "shavua.html";
+  }
+
+  // The whole essay as plain text, the way it reads on the page.
+  function fullText(week) {
+    var out = ["✡ מאמר השבוע של הרב עזרא שליט״א ✡", ""];
+    out.push(week.title);
+    var meta = [week.hebrew_date, week.topic_name].filter(Boolean).join(" · ");
+    if (meta) out.push(meta);
+    out.push("");
+    if (week.greeting) out.push(week.greeting, "");
+    (week.paragraphs || []).forEach(function (p) { out.push(p, ""); });
+    if (week.ruling && week.ruling.text) {
+      out.push("✦ פסק השבוע ✦", "״" + week.ruling.text + "״");
+      if (week.ruling.source) out.push("— " + week.ruling.source);
+      out.push("");
+    }
+    if (week.letter && week.letter.question && week.letter.answer) {
+      out.push("✉ מכתב שהגיע השבוע");
+      out.push("״" + week.letter.question + "״" + (week.letter.from ? " — " + week.letter.from : ""));
+      out.push(week.letter.answer, "");
+    }
+    var israel = (week.israel || []).filter(Boolean);
+    if (israel.length) {
+      out.push("🇮🇱 מה קורה כאן השבוע");
+      israel.forEach(function (item) { out.push("✦ " + item); });
+      out.push("");
+    }
+    if (week.closing) out.push(week.closing, "");
+    if (week.blessing) out.push(week.blessing, "");
+    out.push("— הרב עזרא שליט״א, בית הוראה לכשרות מרחוק");
+    out.push("", "לקריאה באתר:", essayLink());
+    return out.join("\n").replace(/\n{3,}/g, "\n\n");
+  }
+
+  var toast = el("wkToast"), toastTimer = null;
+  function say(message) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 5000);
+  }
+
+  function copy(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var box = document.createElement("textarea");
+      box.value = text;
+      box.setAttribute("readonly", "");
+      box.style.position = "fixed";
+      box.style.opacity = "0";
+      document.body.appendChild(box);
+      box.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(box);
+      ok ? resolve() : reject(new Error("copy failed"));
+    });
+  }
+
+  function whatsapp(text) {
+    window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
+  }
+
   el("wkShare").addEventListener("click", function () {
-    if (!current || !window.MYB) return;
-    var text = "✡ מאמר השבוע של הרב עזרא שליט״א ✡\n\n" + current.title + "\n" +
-               (current.dek || "") + "\n\n" +
-               (current.ruling && current.ruling.text ? "״" + current.ruling.text + "״\n\n" : "") +
-               "לקריאת המאמר המלא:\n" + window.MYB.site + "shavua.html";
-    window.MYB.share(text);
+    if (!current) return;
+    var text = fullText(current);
+    if (window.MYB && window.MYB.sfx) window.MYB.sfx.pop();
+
+    // Phones (and desktops that support it): the share sheet takes the whole essay.
+    if (navigator.share) {
+      navigator.share({ title: current.title, text: text }).catch(function () { /* cancelled */ });
+      return;
+    }
+
+    // Otherwise WhatsApp has to carry it in the link, which only fits a short essay.
+    if (encodeURIComponent(text).length < 6000) {
+      whatsapp(text);
+      return;
+    }
+
+    copy(text).then(function () {
+      say("המאמר המלא הועתק ללוח. וואטסאפ נפתח — הדביקו בשיחה (Ctrl+V) ושלחו.");
+      whatsapp(current.title + "\n" + essayLink());
+    }).catch(function () {
+      whatsapp(current.title + "\n" + (current.dek || "") + "\n\nלקריאת המאמר המלא:\n" + essayLink());
+    });
   });
 })();
 </script>

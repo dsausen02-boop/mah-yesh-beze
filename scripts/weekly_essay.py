@@ -82,6 +82,33 @@ def hebrew_date(day):
     return d.get("hebrew", ""), d.get("hy")
 
 
+WEEKDAYS = ["שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת", "ראשון"]  # Python: Monday=0
+
+
+def weekday_he(day):
+    return ("שבת" if WEEKDAYS[day.weekday()] == "שבת" else "יום " + WEEKDAYS[day.weekday()])
+
+
+def schedule_lines(items):
+    """Spell out which weekday each day falls on.
+
+    Without this the model guesses weekdays from the dates and gets them wrong,
+    and a Jewish day starts the evening before, which is easy to miss.
+    """
+    lines = []
+    for i in items:
+        name = i.get("hebrew") or i.get("title")
+        raw = (i.get("date") or "")[:10]
+        if not name or not raw:
+            continue
+        day = dt.date.fromisoformat(raw)
+        note = ""
+        if i.get("category") == "holiday" and not name.startswith("ערב "):
+            note = " (מתחיל בערב שלפניו, ב%s בערב)" % weekday_he(day - dt.timedelta(days=1))
+        lines.append(f"- {name}: {weekday_he(day)}, {raw}{note}")
+    return "\n".join(lines)
+
+
 def is_solemn(name):
     return any(s in (name or "") for s in SOLEMN)
 
@@ -157,9 +184,16 @@ USER = """\
 
 נתוני השבוע:
 - תאריך עברי בתחילת השבוע: {hebrew_date}
-- תאריכים לועזיים: {start} עד {end}
+- השבוע נמשך מיום ראשון {start} עד שבת {end}
 - הנושא: {topic_kind} — {topic_name}
 {holidays_line}
+
+לוח הימים המדויק של השבוע:
+{schedule}
+
+חשוב מאוד: הלוח הזה מדויק. אל תחשב ימים בעצמך ואל תנחש — כתוב רק את הימים \
+שמופיעים כאן. וזכור שיום עברי מתחיל בערב שלפניו, כך שצום או חג שחל ביום שני \
+נכנס כבר במוצאי יום ראשון.
 
 שלב א׳ — חיפוש: חפש באינטרנט 2–3 דברים קלילים שקורים בישראל בשבוע הזה (מזג אוויר \
 ועונה, מחירים בשוק, עומסי תנועה לקראת החג, אירועי ספורט או תרבות, שעון קיץ/חורף, \
@@ -196,12 +230,13 @@ USER = """\
 """
 
 
-def build_prompt(info, hebdate, start, end):
+def build_prompt(info, hebdate, start, end, items=()):
     holidays = [h for h in info["all_holidays"] if h and h != info["topic_name"]]
     return USER.format(
         hebrew_date=hebdate,
         start=start.isoformat(),
         end=end.isoformat(),
+        schedule=schedule_lines(items) or "- אין חגים השבוע",
         topic_kind="חג" if info["topic_type"] == "holiday" else "פרשת השבוע",
         topic_name=info["topic_name"],
         holidays_line=("- גם בשבוע הזה: " + ", ".join(holidays)) if holidays else "",
@@ -332,7 +367,7 @@ def main():
           file=sys.stderr)
 
     client = anthropic.Anthropic()
-    essay = validate(ask_claude(client, build_prompt(info, hebdate, start, end)))
+    essay = validate(ask_claude(client, build_prompt(info, hebdate, start, end, items)))
     essay.update({
         "week_start": start.isoformat(),
         "week_end": end.isoformat(),

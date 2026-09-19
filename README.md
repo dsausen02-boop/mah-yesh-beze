@@ -81,6 +81,18 @@ The generator refuses an essay that comes back short, or without the greeting,
 the letter or the blessing — those are what make it feel like their rabbi wrote
 it rather than a website.
 
+**Days of the week:** the prompt is given the exact weekday of every holiday
+that week, and a reminder that a Jewish day starts the evening before. Left to
+work it out from dates alone, the model gets it wrong — that already happened
+once, and the essay had Yom Kippur on the wrong day.
+
+**Sharing:** the button sends the whole essay, not a teaser. On a phone it
+opens the normal share sheet, which takes any length. On a desktop browser
+without one, the essay is copied to the clipboard, WhatsApp opens with the
+title and link, and a message tells the reader to paste. A WhatsApp link
+cannot carry the text itself — this essay comes to about 36,000 characters
+once encoded into a URL.
+
 **What it stays away from:** war, politics, disasters and real people, by
 instruction in the prompt. Days of mourning — Tisha B'Av, Yom HaShoah, Yom
 HaZikaron — are never the subject: those weeks fall back to the parasha, and
@@ -174,6 +186,12 @@ python -m http.server 8395
 Then open http://localhost:8395.
 
 ## Change log
+
+- **2026-09-20** — Fixed the days in this week's essay: Yom Kippur begins Sunday
+  night and runs through Monday, not Tuesday. The generator is now handed each
+  holiday's weekday, plus a reminder that the day starts the evening before, so
+  it stops guessing. Sharing now sends the full essay — share sheet on phones,
+  clipboard plus a prompt to paste on desktop. Service worker `v13`.
 
 - **2026-09-20** — Weekly essays are now long letters to his students: an opening
   address, 8-12 paragraphs, a question from a student with his answer, and a
