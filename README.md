@@ -38,16 +38,25 @@ cached, on your computer or at your internet provider.
 
 ## The weekly essay
 
-`shavua.html` is the only page whose content changes by itself. Every Sunday
-morning a GitHub Action asks Claude for a new essay in Rav Ezra's voice and
-commits it, which republishes the site.
+`shavua.html` shows one essay a week, in Rav Ezra's voice.
+
+**How it gets written today: by asking Claude Code.** Say "refresh the weekly
+essay" in a session. Claude checks Hebcal for the week's holiday or parasha,
+looks up what's going on in Israel, writes the essay into `week.json` and
+`weeks/<date>.json`, adds a line to `weeks/index.json`, and pushes. No API key
+and no scheduled job — it happens when you ask.
+
+There is also a GitHub Action that can do the same thing every Sunday on its
+own. **It is switched off** (Actions tab → Weekly essay → shows "disabled").
+To turn it on you need an `ANTHROPIC_API_KEY` secret, as described below;
+without one it just fails and emails you.
 
 **The moving parts**
 
 | File | What it does |
 |---|---|
-| `scripts/weekly_essay.py` | Asks Hebcal what this week holds, then asks Claude for the essay. |
-| `.github/workflows/weekly-essay.yml` | Runs the script every Sunday, 05:00 Israel time, and commits the result. |
+| `scripts/weekly_essay.py` | Asks Hebcal what this week holds, then asks Claude for the essay. Only used by the Action, or by hand with an API key. |
+| `.github/workflows/weekly-essay.yml` | The switched-off Sunday job. Enabling it needs an API key. |
 | `week.json` | This week's essay. The page reads this. |
 | `weeks/<date>.json` | One copy per week, kept forever. |
 | `weeks/index.json` | The archive list the page shows at the bottom. |
@@ -63,16 +72,12 @@ HaZikaron — are never the subject: those weeks fall back to the parasha, and
 the prompt tells the model not to mention the day at all and to keep a gentler
 tone throughout.
 
-**Setup (needed once):** the Action needs an Anthropic API key. In the repo:
-Settings → Secrets and variables → Actions → New repository secret, named
-`ANTHROPIC_API_KEY`. Until that exists, the Action fails with a clear message
-and the site keeps showing the last essay.
+**If you ever want it automatic:** add an Anthropic API key under Settings →
+Secrets and variables → Actions → New repository secret, named
+`ANTHROPIC_API_KEY`, then re-enable the workflow in the Actions tab. Cost is
+roughly 15–30 cents a week — one Claude Opus request plus a few web searches.
 
-**Cost:** roughly 15–30 cents a week — one Claude Opus request plus a few web
-searches.
-
-**Running it by hand:** Actions → Weekly essay → Run workflow. It takes an
-optional date, so you can generate a particular week. Locally:
+**Running the script yourself** (needs the key too):
 
 ```bash
 pip install anthropic tzdata && ANTHROPIC_API_KEY=... python scripts/weekly_essay.py --dry-run
@@ -80,9 +85,8 @@ pip install anthropic tzdata && ANTHROPIC_API_KEY=... python scripts/weekly_essa
 
 `--dry-run` prints the essay without writing any files.
 
-**To stop it:** disable the workflow under the Actions tab, or delete
-`.github/workflows/weekly-essay.yml`. The page keeps showing whatever is in
-`week.json`.
+**If a week is missed,** nothing breaks: the page keeps showing the last essay
+in `week.json` until a new one replaces it.
 
 **Editing an essay by hand** is fine — `week.json` is plain text. Keep the same
 fields, and edit `weeks/<date>.json` too if you want the archive to match.
@@ -156,12 +160,11 @@ Then open http://localhost:8395.
 
 ## Change log
 
-- **2026-09-20** — New weekly page (`shavua.html`) with an essay that updates by
-  itself: a GitHub Action runs `scripts/weekly_essay.py` every Sunday, which asks
-  Hebcal what the week holds and Claude for the essay, with web search on so it can
-  mention what's happening in Israel. Added the archive (`weeks/`), the first
-  essay by hand, a nav link on every page and an app shortcut. Needs an
-  `ANTHROPIC_API_KEY` secret before the first automatic run. Service worker `v11`.
+- **2026-09-20** — New weekly page (`shavua.html`): one essay a week on the
+  holiday or the parasha, tied to what's going on in Israel, with an archive of
+  past weeks (`weeks/`). Written by asking Claude Code — no API key. The Sunday
+  GitHub Action was built too but is switched off; it needs a key. First essay
+  written by hand. Nav link on every page, app shortcut, service worker `v11`.
 
 - **2026-09-20** — Connected the domain `mahyeshbeze.com` (bought at Wix) to
   GitHub Pages, with HTTPS enforced. The old `dsausen02-boop.github.io/mah-yesh-beze/`
